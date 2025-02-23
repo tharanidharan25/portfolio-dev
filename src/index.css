@@ -171,10 +171,14 @@ html {
 .content {
     display: flex;
     width: 100%;
-    background: white;
+    background: black;
 }
 
 .navbar-icons {
     font-size: 1.5rem;
     color: #fff;
+}
+
+.profile-container {
+    color: white;
 }

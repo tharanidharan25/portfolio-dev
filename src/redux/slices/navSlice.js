@@ -5,7 +5,7 @@ const initialState = {
         {
             name: 'Portfolio',
             key: 'portfolio',
-            files: [ {
+            files: [{
                 id: 'profile',
                 label: 'Profile.js'
             }, {

@@ -16,6 +16,8 @@ import ReusableNavBtn from "../utils/ReusableNavBtn";
 import { updateCurrentTab, updateFileTree } from "../redux/slices/navSlice"; 
 import ReusableIconBtn from "../utils/ReusableIconBtn";
 import { updateContent } from "../redux/slices/appSlice";
+import { addOpenedTabs } from "../redux/slices/contentSlice";
+import { Node } from "./Content/Content";
 
 const tabs = [
     {
@@ -95,9 +97,9 @@ export default function Navbar() {
                 fileTree.map((eachTree, idx) => (
                     <motion.div
                         key={eachTree.key}
-                        initial={{ y: 10 }}
+                        initial={{ y: 2 }}
                         animate={{ y: 0 }}
-                        exit={{ y: -10 }}
+                        exit={{ y: -2 }}
                         transition={{ 
                             type: "spring",
                             duration: 0.2, 
@@ -164,13 +166,13 @@ export default function Navbar() {
                                         marginLeft: '0.42rem',
                                 }}
                             >
-                                <AnimatePresence mode="wait" initial={false}>
+                                <AnimatePresence initial={false}>
                                     {eachTree.isExpanded && eachTree.files.map( (eachFile, idx) => (
                                         <motion.div
-                                            key={eachFile}
-                                            initial={{ y: -10 }}
+                                            key={eachFile.id}
+                                            initial={{ y: -5 }}
                                             animate={{ y: 0 }}
-                                            exit={{ y: -10 }}
+                                            exit={{ y: -5 }}
                                             transition={{
                                                 type: "spring",
                                                 duration: 0.025, 
@@ -179,7 +181,10 @@ export default function Navbar() {
                                         >
                                             <ReusableNavBtn
                                                 className={idx}
-                                                onClick={(e) => dispatch(updateContent(eachFile.id))}
+                                                onClick={(e) => {
+                                                    const newNode = new Node(eachFile)
+                                                    dispatch(addOpenedTabs(newNode))
+                                                }}
                                             >
                                                 <div
                                                     style={{
@@ -191,7 +196,7 @@ export default function Navbar() {
                                                 >
                                                     <FaJsSquare  
                                                         color="rgb(255, 255, 0)"
-                                                        height={14}
+                                                        size={14}
                                                     />
                                                     <p>{eachFile.label}</p>
                                                 </div>
