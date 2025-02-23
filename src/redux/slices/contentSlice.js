@@ -14,11 +14,29 @@ class LinkedList {
             this.head = node
             this.tail = node
         } else {
+            node.prev = this.tail
             this.tail.next = node
-            this.tail = this.tail.next
+            this.tail = node
         }
         this.currentContent = this.tail;
         this.size += 1;
+    }
+
+    deleteNode(node) {
+        let curr = this.head
+        while (curr !== node) {
+            curr = curr.next
+        }
+        if (curr.prev) curr.prev.next = curr.next
+        if (curr.next) curr.next.prev = curr.prev
+        if (this.head === curr) this.head = curr.next
+        if (this.tail === curr) this.tail = curr.prev
+        if (this.currentContent === curr) {
+            if (curr.prev) this.currentContent = curr.prev
+            else this.currentContent = curr.next
+        }
+        curr.next = null;
+        curr.prev = null;
     }
 
     setCurrentTab(node) {
@@ -37,7 +55,7 @@ class LinkedList {
         const tabs = []
         let curr = this.head
         while (curr) {
-            tabs.push(curr.data)
+            tabs.push(curr)
             curr = curr.next
         }
         return tabs
@@ -60,12 +78,18 @@ const contentSlice = createSlice({
             }
             state.tabs = state.openedTabs.traverse();
             state.currentContent = state.openedTabs.currentContent?.data?.id || null;
+        },
+        closeOpenedTab: (state, { payload }) => { // payload is a Node
+            state.openedTabs.deleteNode(payload)
+            state.tabs = state.openedTabs.traverse();
+            state.currentContent = state.openedTabs.currentContent?.data?.id || null;
         }
     }
 })
 
 export const {
-    addOpenedTabs
+    addOpenedTabs,
+    closeOpenedTab
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

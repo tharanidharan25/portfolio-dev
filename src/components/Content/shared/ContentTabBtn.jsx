@@ -34,6 +34,7 @@ export default function ContentTabBtn({
                     padding: '4px 4px',
                     fontSize: '14px',
                     color: '#fff',
+                    cursor: 'pointer',
                     ...props?.style,
                 }}
             >

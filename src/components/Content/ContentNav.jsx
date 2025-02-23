@@ -1,7 +1,11 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+
 import ContentTabBtn from "./shared/ContentTabBtn";
 
+import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
+
 export default function ContentNav() {
+    const dispatch = useDispatch();
 
     const tabs = useSelector(state => state.content.tabs) || [];
     const openedTabs = useSelector(state => state.content.openedTabs);
@@ -9,11 +13,11 @@ export default function ContentNav() {
     const getopenedTabs = () => (
         tabs.map((eachTab, idx) => (
             <ContentTabBtn 
-                key={eachTab.id}
-                onClick={() => console.log(eachTab, ' Clicked')}
-                onClose={() => console.log(eachTab, ' Closed')}
-                label={eachTab.label}
-                currentTab={openedTabs.currentContent?.data?.id === eachTab.id || false}
+                key={eachTab.data.id}
+                onClick={() => dispatch(addOpenedTabs(eachTab))}
+                onClose={() => dispatch(closeOpenedTab(eachTab))}
+                label={eachTab.data.label}
+                currentTab={openedTabs.currentContent?.data?.id === eachTab.data.id || false}
             />
         ))
     )
