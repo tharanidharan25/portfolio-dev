@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { debounce } from "lodash";
 
 import Profile from "../Profile";
 import Education from "../Education";
@@ -24,7 +25,32 @@ export default function Content() {
 
     const fileTree = useSelector(state => state.nav.fileTree);
     const openedTabs = useSelector(state => state.content.openedTabs);
+    const openedTabsHash = useSelector(state => state.content.openedTabsHash);
     const currentContent = useSelector(state => state.content.currentContent);
+
+    console.log(openedTabsHash);
+
+    const changePage = useCallback(debounce((e) => {
+        const contenNav = document.querySelector("#content");
+
+        if (Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight) < 1) {
+            if (e.nativeEvent.wheelDeltaY <= -120) {
+                if (openedTabs?.currentContent?.next) {
+                    dispatch(addOpenedTabs(openedTabs.currentContent.next));
+                } 
+                // else {
+                //     const nextFile = fileTree[0].files.find(eachFile => !(eachFile.id in openedTabsHash))
+                //     if (nextFile) {
+                //         dispatch(addOpenedTabs(new Node(nextFile)));
+                //     }
+                // }
+            } else if (e.nativeEvent.wheelDeltaY >= 120) {
+                if (openedTabs?.currentContent?.prev) {
+                    dispatch(addOpenedTabs(openedTabs.currentContent.prev));
+                }
+            }
+        }
+    }, 100),[openedTabs, dispatch]);
 
 
     useEffect(() => {
@@ -37,24 +63,12 @@ export default function Content() {
     return (
         <main 
             className="content"
+            id="content"
             style={{
                 display: 'flex',
                 flexDirection: 'column'
             }}
-            onWheel={(e) => {
-                const contenNav = document.querySelector('.content')
-                console.log(Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight));
-                if (Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight) < 1) {
-                    if (e.deltaY > 0) {
-                        if (openedTabs?.currentContent?.next) {
-                            dispatch(addOpenedTabs(openedTabs.currentContent.next))
-                        }
-                    } else {
-
-                    }
-                }
-                console.log(e)
-            }}
+            onWheel={(e) => changePage(e)}
         >
             <div className="content-header">
                 <ContentNav />

@@ -77,8 +77,8 @@ const contentSlice = createSlice({
         addOpenedTabs: (state, { payload }) => { // payload is a Node
             if (!state.openedTabs.setCurrentTab(payload)) {
                 state.openedTabs.insertNode(payload);
+                state.openedTabsHash[payload.data.id] = payload;
             }
-            state.openedTabsHash[payload.data.id] = payload
             state.tabs = state.openedTabs.traverse();
             state.currentContent = state.openedTabs.currentContent?.data?.id || null;
         },
@@ -86,7 +86,7 @@ const contentSlice = createSlice({
             state.openedTabs.deleteNode(payload)
             state.tabs = state.openedTabs.traverse();
             state.currentContent = state.openedTabs.currentContent?.data?.id || null;
-            state.openedTabsHash.delete(payload)
+            delete state.openedTabsHash[payload?.data?.id]
         }
     }
 })
