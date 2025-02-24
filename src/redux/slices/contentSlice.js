@@ -37,6 +37,7 @@ class LinkedList {
         }
         curr.next = null;
         curr.prev = null;
+        this.size -= 1;
     }
 
     setCurrentTab(node) {
@@ -64,6 +65,7 @@ class LinkedList {
 
 const initialState = {
     openedTabs: new LinkedList(),
+    openedTabsHash: {},
     tabs: [],
     currentContent: null
 }
@@ -76,6 +78,7 @@ const contentSlice = createSlice({
             if (!state.openedTabs.setCurrentTab(payload)) {
                 state.openedTabs.insertNode(payload);
             }
+            state.openedTabsHash[payload.data.id] = payload
             state.tabs = state.openedTabs.traverse();
             state.currentContent = state.openedTabs.currentContent?.data?.id || null;
         },
@@ -83,6 +86,7 @@ const contentSlice = createSlice({
             state.openedTabs.deleteNode(payload)
             state.tabs = state.openedTabs.traverse();
             state.currentContent = state.openedTabs.currentContent?.data?.id || null;
+            state.openedTabsHash.delete(payload)
         }
     }
 })

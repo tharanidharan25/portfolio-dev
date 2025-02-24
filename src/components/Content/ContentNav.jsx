@@ -26,6 +26,7 @@ export default function ContentNav() {
         <div
             style={{
                 display: 'flex',
+                background: '#2d2f2d',
             }}
             id="contentNav"
         >

@@ -42,9 +42,18 @@ export default function Content() {
                 flexDirection: 'column'
             }}
             onWheel={(e) => {
-                console.log(e)
                 const contenNav = document.querySelector('.content')
-                console.log(Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight))
+                console.log(Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight));
+                if (Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight) < 1) {
+                    if (e.deltaY > 0) {
+                        if (openedTabs?.currentContent?.next) {
+                            dispatch(addOpenedTabs(openedTabs.currentContent.next))
+                        }
+                    } else {
+
+                    }
+                }
+                console.log(e)
             }}
         >
             <div className="content-header">
