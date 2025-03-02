@@ -19,7 +19,7 @@ export default function ContentTabBtn({
         >
             {currentTab && (<motion.span
                 layoutId="contentTab"
-                transition={{ type:'spring', duration: 0.3, bounce: 0 }}
+                transition={{ type:'spring', duration: 0.5, bounce: 0 }}
                 style={{
                     background: '#000',
                     zIndex: 0,
@@ -61,9 +61,12 @@ export default function ContentTabBtn({
                     style={{
                         cursor: 'pointer',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        padding: '2px',
+                        transition: '200ms ease-in-out'
                     }}
                     onClick={onClose}
+                    className="content-nav-close"
                 >
                     <VscChromeClose 
                         size={14}

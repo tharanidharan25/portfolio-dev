@@ -182,3 +182,8 @@ html {
 .profile-container {
     color: white;
 }
+
+.content-nav-close:hover {
+    background-color: gray;
+    border-radius: 9999px;
+}
