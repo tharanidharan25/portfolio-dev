@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import ContentTabBtn from "./shared/ContentTabBtn";
 
 import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
+import { AnimatePresence, motion } from 'motion/react';
 
 export default function ContentNav() {
     const dispatch = useDispatch();
@@ -19,18 +20,21 @@ export default function ContentNav() {
                 label={eachTab.data.label}
                 currentTab={openedTabs.currentContent?.data?.id === eachTab.data.id || false}
             />
+
         ))
     )
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                background: '#2d2f2d',
-            }}
-            id="contentNav"
-        >
-            {getopenedTabs()}
-        </div>
+        <AnimatePresence initial={false}>
+            <motion.div
+                style={{
+                    display: 'flex',
+                    background: '#2d2f2d',
+                }}
+                id="contentNav"
+            >
+                {getopenedTabs()}
+            </motion.div>
+        </AnimatePresence>
     )
 }

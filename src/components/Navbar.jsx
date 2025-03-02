@@ -15,7 +15,6 @@ import ReusableNavBtn from "../utils/ReusableNavBtn";
 
 import { updateCurrentTab, updateFileTree } from "../redux/slices/navSlice"; 
 import ReusableIconBtn from "../utils/ReusableIconBtn";
-import { updateContent } from "../redux/slices/appSlice";
 import { addOpenedTabs } from "../redux/slices/contentSlice";
 import { Node } from "./Content/Content";
 

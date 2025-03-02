@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect } from "react";
-import { debounce } from "lodash";
+import { useCallback, useEffect, useState } from "react";
+import { debounce, throttle } from "lodash";
+import { AnimatePresence, motion } from 'motion/react';
 
 import Profile from "../Profile";
 import Education from "../Education";
@@ -28,29 +29,65 @@ export default function Content() {
     const openedTabsHash = useSelector(state => state.content.openedTabsHash);
     const currentContent = useSelector(state => state.content.currentContent);
 
-    console.log(openedTabsHash);
+    const [reachedEnd, setReachedEnd] = useState(false);
+    const [reachedTop, setReachedTop] = useState(true);
 
     const changePage = useCallback(debounce((e) => {
-        const contenNav = document.querySelector("#content");
+        if (e.ctrlKey) return;
 
-        if (Math.abs(contenNav.scrollHeight - contenNav.scrollTop - contenNav.clientHeight) < 1) {
-            if (e.nativeEvent.wheelDeltaY <= -120) {
-                if (openedTabs?.currentContent?.next) {
-                    dispatch(addOpenedTabs(openedTabs.currentContent.next));
-                } 
-                // else {
-                //     const nextFile = fileTree[0].files.find(eachFile => !(eachFile.id in openedTabsHash))
-                //     if (nextFile) {
-                //         dispatch(addOpenedTabs(new Node(nextFile)));
-                //     }
-                // }
-            } else if (e.nativeEvent.wheelDeltaY >= 120) {
+        const contentNav = document.querySelector("#content");
+
+        if (contentNav.scrollTop < 1) {
+            if (e.nativeEvent.wheelDeltaY >= 120) {
+                if (!((contentNav.scrollHeight - contentNav.clientHeight) < 1) && !reachedTop) {
+                    setReachedTop(true)
+                    return
+                }
                 if (openedTabs?.currentContent?.prev) {
                     dispatch(addOpenedTabs(openedTabs.currentContent.prev));
+                    return
+                }
+            } else if ((contentNav.scrollHeight - contentNav.clientHeight) < 1) {
+                if (e.nativeEvent.wheelDeltaY <= -120) {
+                    if (openedTabs?.currentContent?.next) {
+                        dispatch(addOpenedTabs(openedTabs.currentContent.next));
+                        return
+                    } 
+                    else {
+                        const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
+                        if (nextFile) {
+                            dispatch(addOpenedTabs(new Node(nextFile)));
+                            return
+                        }
+                    }
                 }
             }
         }
-    }, 100),[openedTabs, dispatch]);
+        if (Math.abs(contentNav.scrollHeight - (contentNav.scrollTop + contentNav.clientHeight)) < 1) {
+            if (!reachedEnd) {
+                setReachedTop(false);
+                setReachedEnd(true);
+                return
+            }
+            setReachedTop(true);
+            setReachedEnd(false);
+            if (e.nativeEvent.wheelDeltaY <= -120) {
+                if (openedTabs?.currentContent?.next) {
+                    dispatch(addOpenedTabs(openedTabs.currentContent.next));
+                    return
+                } 
+                else {
+                    const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
+                    if (nextFile) {
+                        dispatch(addOpenedTabs(new Node(nextFile)));
+                        return
+                    }
+                }
+            }
+        }
+        setReachedEnd(false)
+        setReachedTop(false)
+    }, 200),[openedTabsHash, openedTabs, reachedEnd, reachedTop]);
 
 
     useEffect(() => {
@@ -63,28 +100,33 @@ export default function Content() {
     return (
         <main 
             className="content"
-            id="content"
             style={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
             }}
             onWheel={(e) => changePage(e)}
         >
             <div className="content-header">
                 <ContentNav />
             </div>
-            <div 
-                className="tabs"
-                style={{
-                    color: '#fff'
-                }}
-            >
-                {currentContent == 'profile' && <Profile />}
-                {currentContent == 'education' && <Education />}
-                {currentContent == 'projects' && <Projects />}
-                {currentContent == 'skills' && <Skills />}
-                {currentContent == 'interests' && <Interests />}
-            </div>
+            <AnimatePresence>
+                <motion.div 
+                    className="tabs"
+                    id="content"
+                    style={{
+                        color: '#fff',
+                        padding: '1rem',
+                        paddingBottom: '3rem',
+                        overflow: 'auto',
+                    }}
+                >
+                    {currentContent == 'profile' && <Profile key={'profile'}/>}
+                    {currentContent == 'education' && <Education key={'education'}/>}
+                    {currentContent == 'projects' && <Projects key={'projects'}/>}
+                    {currentContent == 'skills' && <Skills key={'skills'}/>}
+                    {currentContent == 'interests' && <Interests key={'interests'}/>}
+                </motion.div>
+            </AnimatePresence>
         </main>
     )
 }
