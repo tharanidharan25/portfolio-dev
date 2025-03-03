@@ -5,8 +5,18 @@ export default function Profile(){
     const profile = useSelector((store)=>store.profile);
     return (
         <div className="profile-container">
-            <h1>{profile.name}</h1>
-            <p>{profile.mobileNo}</p>
+            <div>
+                <h2
+                    className="yeah-its-me"
+                >
+                    {profile.name.split('').map((letter, idx) => (
+                        <span className="part-of-me" key={idx}>
+                            {letter}
+                        </span>
+                    ))}
+                </h2>
+            </div>
+            <p className="whatever">{profile.mobileNo}</p>
             <p>{profile.emailId}</p>
             <p><a>{profile.linkedIn}</a></p>
             <p>{profile.dob}</p>

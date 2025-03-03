@@ -63,6 +63,7 @@ class LinkedList {
     }
 }
 
+
 const initialState = {
     openedTabs: new LinkedList(),
     openedTabsHash: {},
