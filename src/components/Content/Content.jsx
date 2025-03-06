@@ -32,15 +32,20 @@ export default function Content() {
     const [reachedEnd, setReachedEnd] = useState(false);
     const [reachedTop, setReachedTop] = useState(true);
 
+    const contentNav = document.querySelector("#content");
+
     const changePage = useCallback(debounce((e) => {
         if (e.ctrlKey) return;
 
-        const contentNav = document.querySelector("#content");
-
+        // User already at the top
         if (contentNav.scrollTop < 1) {
             if (e.nativeEvent.wheelDeltaY >= 120) {
+
+                // There's not enough content to cause scroll
+                // User reached top
                 if (!((contentNav.scrollHeight - contentNav.clientHeight) < 1) && !reachedTop) {
                     setReachedTop(true)
+                    setReachedEnd(false)
                     return
                 }
                 if (openedTabs?.currentContent?.prev) {
@@ -48,6 +53,8 @@ export default function Content() {
                     return
                 }
             } else if ((contentNav.scrollHeight - contentNav.clientHeight) < 1) {
+                
+                // User reached bottom as well since there's not enough content to cause scroll
                 if (e.nativeEvent.wheelDeltaY <= -120) {
                     if (openedTabs?.currentContent?.next) {
                         dispatch(addOpenedTabs(openedTabs.currentContent.next));
@@ -63,13 +70,16 @@ export default function Content() {
                 }
             }
         }
+
+        // There's content to be able to scroll and user has reached bottom
         if (Math.abs(contentNav.scrollHeight - (contentNav.scrollTop + contentNav.clientHeight)) < 1) {
             if (!reachedEnd) {
+                // User has reached bottom for the first time
                 setReachedTop(false);
                 setReachedEnd(true);
                 return
             }
-            setReachedTop(true);
+            setReachedTop(true); // Moving to next file, so user has already reached top of the new file
             setReachedEnd(false);
             if (e.nativeEvent.wheelDeltaY <= -120) {
                 if (openedTabs?.currentContent?.next) {
@@ -89,6 +99,10 @@ export default function Content() {
         setReachedTop(false)
     }, 200),[openedTabsHash, openedTabs, reachedEnd, reachedTop]);
 
+    // contentNav.onscroll = (e) => {
+    //     console.log(e);
+    // }
+
 
     useEffect(() => {
         if (!openedTabs.head){
@@ -104,7 +118,7 @@ export default function Content() {
                 display: 'flex',
                 flexDirection: 'column',
             }}
-            onWheel={(e) => changePage(e)}
+            onWheel={(e) => changePage(e)} // do for track pad scroll
         >
             <div className="content-header">
                 <ContentNav />

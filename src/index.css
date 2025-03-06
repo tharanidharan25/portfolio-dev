@@ -1,11 +1,14 @@
 body {
-  height: 100vh;
+    height: 100vh;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    --font-heading: "Major Mono Display", monospace;
+    --font-sub-heading: "Julius Sans One", sans-serif;
+    --font-description: "Noto Sans", sans-serif;
 }
 
 html {
@@ -24,7 +27,7 @@ html {
 
 .page-content {
     display: flex;
-    height: 100%;
+    height: 95%;
 }
 
 .search-button svg {
@@ -40,6 +43,7 @@ html {
     background-color: #2d2f2d;
     font-weight: 100;
     align-items: center;
+    height: 5%;
 }
 
 .menu-btn {
@@ -190,33 +194,61 @@ html {
 
 .part-of-me {
     color: indigo;
-    font-weight: 100;
-    font-size: 8rem;
-    transition: all 0.75s ease-in-out, 0.75s ease-in-out;
+    font-weight: 500;
+    font-size: 9rem;
+    transition: all 0.25s ease-in-out;
+    text-decoration: underline;
+    font-family: "Jersey 15", sans-serif;
 }
 
 
 .part-of-me:hover {
-    font-weight: 900;
+    /* font-weight: 900; */
     color: rgb(238, 242, 255);
 }
 
 /* To the right */
 .part-of-me:hover + .part-of-me {
-    font-weight: 500;
+    /* font-weight: 500; */
     color: rgb(199, 210, 254);
-}
-
-.part-of-me:hover + .part-of-me + .part-of-me {
-    font-weight: 300;
 }
 
 /* To the left */
 .part-of-me:has(+ .part-of-me:hover) {
-    font-weight: 500;
+    /* font-weight: 500; */
     color: rgb(199, 210, 254);
 }
 
-.part-of-me:has(+ .part-of-me + .part-of-me:hover) {
-    font-weight: 300;
+.profile-card-container {
+    background: lch(12.5 5 270 / 1);
+    transition: background 0.25s ease-in-out;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.profile-card-container:hover {
+    background: lch(15 2.92 269.12);
+    /* --a: hsla(211, 96%, 78%, 40%);
+    --b: hsla(211, 96%, 78%, 0%);
+    background: radial-gradient(circle at center, var(--a), var(--b)); */
+}
+
+.profile-card-title-container {
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+}
+
+.profile-card-title-container p {
+    /* text-decoration: underline; */
+}
+
+.profile-card-content-container {
+    font-family: var(--font-description);
+    color: #7a8ba3;
+}
+
+.profile-card-subtitle-container {
+    font-family: var(--font-sub-heading);
+    color: #e2e8f0;
 }
