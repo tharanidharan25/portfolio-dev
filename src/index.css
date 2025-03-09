@@ -219,7 +219,7 @@ html {
     color: rgb(199, 210, 254);
 }
 
-.profile-card-container {
+.about-card-container {
     background: lch(12.5 5 270 / 1);
     transition: background 0.25s ease-in-out;
     padding: 1rem;
@@ -227,28 +227,38 @@ html {
     cursor: pointer;
 }
 
-.profile-card-container:hover {
+.about-card-container:hover {
     background: lch(15 2.92 269.12);
     /* --a: hsla(211, 96%, 78%, 40%);
     --b: hsla(211, 96%, 78%, 0%);
     background: radial-gradient(circle at center, var(--a), var(--b)); */
 }
 
-.profile-card-title-container {
+.about-card-title-container {
     font-family: var(--font-heading);
     letter-spacing: 2px;
 }
 
-.profile-card-title-container p {
+.about-card-title-container p {
     /* text-decoration: underline; */
 }
 
-.profile-card-content-container {
+.about-card-content-container {
     font-family: var(--font-description);
     color: #7a8ba3;
 }
 
-.profile-card-subtitle-container {
+.about-card-subtitle-container {
     font-family: var(--font-sub-heading);
     color: #e2e8f0;
+}
+
+.copy-btn {
+    opacity: 0;
+    transition: all 0.25s ease-in-out;
+}
+
+.each-contact-container:hover .copy-btn {
+    opacity: 1 !important;
+    visibility: visible;
 }

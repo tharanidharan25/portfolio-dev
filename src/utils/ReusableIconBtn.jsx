@@ -13,6 +13,7 @@ export default function ReusableIconBtn({
                 ...sx
             }}
             onClick={onClick}
+            {...props}
         >
             {children}
         </button>
