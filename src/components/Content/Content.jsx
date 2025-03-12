@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from 'motion/react';
 
 import Profile from "../Profile";
 import Education from "../Education";
-import Projects from "../Projects";
-import Skills from "../Skills";
+import SkillsAndProjects from "../SkillsAndProjects/SkillsAndProjects";
 import Interests from "../Interests";
 
 import { addOpenedTabs } from "../../redux/slices/contentSlice";
@@ -136,8 +135,7 @@ export default function Content() {
                 >
                     {currentContent == 'profile' && <Profile key={'profile'}/>}
                     {currentContent == 'education' && <Education key={'education'}/>}
-                    {currentContent == 'projects' && <Projects key={'projects'}/>}
-                    {currentContent == 'skills' && <Skills key={'skills'}/>}
+                    {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'}/>}
                     {currentContent == 'interests' && <Interests key={'interests'}/>}
                 </motion.div>
             </AnimatePresence>

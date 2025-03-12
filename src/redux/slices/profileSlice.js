@@ -17,24 +17,39 @@ const initialState = {
         contacts: [{
             id: 'mail',
             icon: 'mailIcon',
-            background: '#fff',
-            iconColor: '#c71610',
+            background: 'rgb(199, 22, 16)',
+            iconColor: '#fff',
             link: 'mailto:tharanidharan.ponselvam@gmail.com',
-            copyLink: 'tharanidharan.ponselvam@gmail.com'
+            copyLink: 'tharanidharan.ponselvam@gmail.com',
+            hoverBgColor: 'rgb(0, 0, 0, 30)',
+            borderColor: 'rgb(199, 22, 16)',
         }, {
             id: 'linkedIn',
             icon: 'linkedInIcon',
             background: '#0077B5',
             iconColor: '#fff',
             link: 'https://www.linkedin.com/in/tharanidharan-ponselvam/',
-            copyLink: 'https://www.linkedin.com/in/tharanidharan-ponselvam/'
+            copyLink: 'https://www.linkedin.com/in/tharanidharan-ponselvam/',
+            hoverBgColor: 'rgb(0, 0, 0, 30)',
+            borderColor: '#0077B5',
         }, {
             id: 'gitHub',
             icon: 'gitHubIcon',
-            background: '#fff',
-            iconColor: '#000',
+            background: 'rgb(37 36 36)',
+            iconColor: '#fff',
             link: 'https://github.com/tharanidharan25',
-            copyLink: 'https://github.com/tharanidharan25'
+            copyLink: 'https://github.com/tharanidharan25',
+            hoverBgColor: 'rgb(0, 0, 0, 30)',
+            borderColor: '#fff',
+        }, {
+            id: 'leetcode',
+            icon: 'leetcodeIcon',
+            background: 'rgb(37 36 36)',
+            iconColor: '#fea116',
+            link: 'https://leetcode.com/u/Tharanidharan/',
+            copyLink: 'https://leetcode.com/u/Tharanidharan/',
+            hoverBgColor: 'rgb(0, 0, 0, 30)',
+            borderColor: '#fea116',
         }],
         style: {
             gridColumn: '1 / -1'

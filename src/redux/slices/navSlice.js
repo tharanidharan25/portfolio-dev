@@ -9,14 +9,11 @@ const initialState = {
                 id: 'profile',
                 label: 'Profile.js'
             }, {
+                id: 'skillsAndProjects',
+                label: 'Skills and Projects.js'
+            }, {
                 id : 'education',
                 label: 'Education.js'
-            }, {
-                id: 'projects',
-                label: 'Projects.js'
-            }, {
-                id: 'skills',
-                label: 'Skills.js'
             }, {
                 id: 'interests',
                 label: 'Interests.js'

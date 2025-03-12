@@ -1,26 +1,26 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { motion } from 'motion/react'
 
 import { BiLogoGmail } from "react-icons/bi";
 import { IoCopyOutline } from "react-icons/io5";
 import { AiOutlineLinkedin } from "react-icons/ai";
 import { FaGithub } from "react-icons/fa";
+import { TbBrandLeetcode } from "react-icons/tb";
 
 import ReusableIconBtn from "../utils/ReusableIconBtn";
+import ContentContainer from "./Content/shared/ContentContainer";
 
 const contactIconsMap = (icon, styles) => {
-    const iconStyles = {
-        width: '100%',
-        height: '100%',
-        ...styles
-    }
     switch (icon) {
         case 'mailIcon':
-            return <BiLogoGmail size={200} style={iconStyles} />
+            return <BiLogoGmail size={'4rem'} style={styles} />
         case 'linkedInIcon':
-            return <AiOutlineLinkedin style={iconStyles} />
+            return <AiOutlineLinkedin size={'4rem'} style={styles} />
         case 'gitHubIcon':
-            return <FaGithub style={iconStyles} />
+            return <FaGithub size={'4rem'} style={styles} />
+        case 'leetcodeIcon':
+            return <TbBrandLeetcode size={'4rem'} style={styles} />
         default:
             return null;
     }
@@ -36,13 +36,13 @@ export default function Profile() {
                 return (
                     <div
                         style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.75rem',
-                                ...data.style,
-                            }}
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.75rem',
+                            ...data.style,
+                        }}
                     >
-                        <div className="about-card-title-container">
+                        <div className="title-container">
                             <p
                                 style={{
                                     fontSize: '2rem',
@@ -51,10 +51,13 @@ export default function Profile() {
                                 }}
                             >{data.title}</p>
                         </div>
-                        <div 
+                        <ContentContainer 
                             className="about-card-container"
+                            borderColor="rgb(97, 62, 163)"
+                            borderWidth={2}
+                            key={'about-container'}
                         >
-                            <div className="about-card-subtitle-container">
+                            <div className="subtitle-container">
                                 <p
                                     style={{
                                         fontSize: '1rem',
@@ -65,11 +68,7 @@ export default function Profile() {
                             <div className="about-card-content-container">
                                 <p>{data.content}</p>
                             </div>
-                            {/* <div 
-                                className="about-card-footer-container">
-                                <p>{data.footer}</p>
-                            </div> */}
-                        </div>
+                        </ContentContainer>
                     </div>
                 )
             case 'contact':
@@ -82,7 +81,7 @@ export default function Profile() {
                                 ...data.style,
                             }}
                     >
-                        <div className="about-card-title-container">
+                        <div className="title-container">
                             <p
                                 style={{
                                     fontSize: '2rem',
@@ -91,29 +90,45 @@ export default function Profile() {
                                 }}
                             >{data.title}</p>
                         </div>
-                        <div
+                        <motion.div
                             className="contacts-container"
                             style={{
-                                height: '240px',
                                 display: 'flex',
                                 gap: '1rem',
+                                height: 240
                             }}
                         >
                             {data.contacts.map(eachContact => (
-                                <div
+                                <ContentContainer
                                     className="each-contact-container"
-                                    id={eachContact.id}
-                                    style={{
+                                    key={eachContact.id}
+                                    styles={{
                                         position: 'relative',
-                                        borderRadius: '0.5rem',
+                                        borderRadius: '0.1rem',
                                         background: eachContact.background,
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => {
+                                        window.open(eachContact.link, `${eachContact.id !== 'mail' ? '_blank' : '_self'}`)
+                                    }}
+                                    borderColor={eachContact.borderColor}
+                                    borderWidth={4}
+                                    whileHover = {{
+                                        rotate: '2.5deg',
+                                        scale: 1.05,
+                                        zIndex: 1000,
+                                        background: `${eachContact.hoverBgColor}`
                                     }}
                                 >
-                                    <a href={eachContact.link} target={eachContact.id !== 'mail' ? '_blank' : '_self'}>
+                                    <div>
                                         {contactIconsMap(eachContact.icon, {
                                             color: eachContact.iconColor,
                                         })}
-                                    </a>
+                                    </div>
                                     <div
                                         className="copy-btn"
                                         style={{
@@ -127,14 +142,17 @@ export default function Profile() {
                                                 padding: '0.5rem'
                                             }}
                                             className='copy-btn'
-                                            onClick={async () => await navigator.clipboard.writeText(eachContact.copyLink)}
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+                                                await navigator.clipboard.writeText(eachContact.copyLink)
+                                            }}
                                         >
-                                            <IoCopyOutline />
+                                            <IoCopyOutline size={'1.25rem'} color='#fff' />
                                         </ReusableIconBtn>
                                     </div>
-                                </div>
+                                </ContentContainer>
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
                 )
             
@@ -176,7 +194,6 @@ export default function Profile() {
                     {profile.data.map(eachData => (getContent(eachData)))}
                 </div>
             </section>
-            
         </div>
     )
 }

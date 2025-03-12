@@ -197,7 +197,13 @@ export default function Navbar() {
                                                         color="rgb(255, 255, 0)"
                                                         size={14}
                                                     />
-                                                    <p>{eachFile.label}</p>
+                                                    <p
+                                                        style={{
+                                                            whiteSpace: 'nowrap',
+                                                            textOverflow: 'ellipsis',
+                                                            overflow: 'hidden'
+                                                        }}
+                                                    >{eachFile.label}</p>
                                                 </div>
                                             </ReusableNavBtn>
                                         </motion.div>
@@ -221,7 +227,6 @@ export default function Navbar() {
                 <AnimatePresence mode="popLayout" initial={false}>
                     <div 
                         className="tab-content"
-                        
                     >
                         {getTabContent()}
                     </div>

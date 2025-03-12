@@ -144,7 +144,7 @@ html {
     padding: 0.5rem 0.25rem;
     overflow-y: visible;
     overflow-x: hidden;
-    width: 200px;
+    width: 240px;
     background-color: #1a1a1a;
 }
 
@@ -223,7 +223,7 @@ html {
     background: lch(12.5 5 270 / 1);
     transition: background 0.25s ease-in-out;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     cursor: pointer;
 }
 
@@ -234,13 +234,13 @@ html {
     background: radial-gradient(circle at center, var(--a), var(--b)); */
 }
 
-.about-card-title-container {
+.title-container {
     font-family: var(--font-heading);
-    letter-spacing: 2px;
 }
 
-.about-card-title-container p {
-    /* text-decoration: underline; */
+.title-container p {
+    letter-spacing: 4px;
+    line-height: 1.5;
 }
 
 .about-card-content-container {
@@ -248,7 +248,7 @@ html {
     color: #7a8ba3;
 }
 
-.about-card-subtitle-container {
+.subtitle-container {
     font-family: var(--font-sub-heading);
     color: #e2e8f0;
 }
@@ -261,4 +261,14 @@ html {
 .each-contact-container:hover .copy-btn {
     opacity: 1 !important;
     visibility: visible;
+}
+
+.content-container:hover .top,
+.content-container:hover .bottom {
+    width: 100% !important;
+}
+
+.content-container:hover .left,
+.content-container:hover .right {
+    height: 100% !important;
 }

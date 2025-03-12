@@ -5,6 +5,7 @@ import educationSlice from "../slices/educationSlice";
 import appSlice from "../slices/appSlice";
 import navSlice from "../slices/navSlice";
 import contentSlice from "../slices/contentSlice";
+import skillsAndProjectsSlice from "../slices/skillsAndProjectsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         education: educationSlice,
         app: appSlice,
         nav: navSlice,
-        content: contentSlice
+        content: contentSlice,
+        skillsAndProjects: skillsAndProjectsSlice
     }
 })
