@@ -65,7 +65,7 @@ export default function Profile() {
                                     }}
                                 >{data.subTitle}</p>
                             </div>
-                            <div className="about-card-content-container">
+                            <div className="text-content-container">
                                 <p>{data.content}</p>
                             </div>
                         </ContentContainer>
