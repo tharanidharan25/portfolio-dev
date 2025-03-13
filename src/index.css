@@ -273,11 +273,17 @@ html {
     height: 100% !important;
 }
 
+.skills-projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .skills-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
 .skill-heading-container {
@@ -286,20 +292,24 @@ html {
 }
 
 .skill-column-container {
-    position: relative;
-    padding: 1rem;
+    display: flex;
+    padding: 0.25rem 0;
     width: 100%;
-    padding-left: 0;
+    position: relative;
 }
 
 .skills-list-container {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-left: 2rem;
 }
 
 .each-skill {
+    position: relative;
     cursor: default;
+    width: fit-content;
+    transition: all 0.5s ease-in-out;
 }
 
 .skill-underline {
@@ -316,12 +326,13 @@ html {
     font-size: 1.25rem;
     position: relative;
     width: fit-content;
+    margin-bottom: 0.5rem;
 }
 
 .each-skill:hover .skill-underline {
     width: 100%;
 }
 
-.each-skill-container:hover .skill-each-letter {
+.each-skill:hover {
     color: #fff;
 }

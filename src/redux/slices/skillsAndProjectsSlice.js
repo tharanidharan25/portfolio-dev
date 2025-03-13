@@ -33,8 +33,56 @@ const initialState = {
             label: 'CSS',
             level: '90%'
         }]
+    }, {
+        id: 'tools',
+        label: 'Tools',
+        content: [{
+            id: 'git',
+            label: 'Git',
+            level: '80%'
+        }, {
+            id: 'postmanHoppscotch',
+            label: 'Postman/Hoppscotch',
+            level: '80%'
+        }, {
+            id: 'chromeDevTools',
+            label: 'Chrome Dev Tools',
+            level: '80%'
+        }, {
+            id: 'azuredevops',
+            label: 'Azure DevOps',
+            level: '80%'
+        }, {
+            id: 'vscode',
+            label: 'VS Code',
+            level: '80%'
+        }]
+    }, {
+        id: 'otherskills',
+        label: 'Other Skills',
+        content: [{
+            id: 'dataStructures',
+            label: 'Data Structures and Algorithms',
+            level: '80%'
+        }, {
+            id: 'problemSolving',
+            label: 'Problem Solving',
+            level: '80%'
+        }, {
+            id: 'apiIntegration',
+            label: 'RESTful API Integration',
+            level: '90%'
+        }, {
+            id: 'responsiveWebDev',
+            label: 'Responsive Web Development',
+            level: '80%'
+        }]
     }],
-    projects: []
+    projects: [{
+        id: 'apAutomation',
+        label: "AP Automation",
+        
+    }]
 }
 
 const skillsAndProjectsSlice = createSlice({

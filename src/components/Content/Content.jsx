@@ -34,7 +34,7 @@ export default function Content() {
     const contentNav = document.querySelector("#content");
 
     const changePage = useCallback(debounce((e) => {
-        if (e.ctrlKey) return;
+        if (e.ctrlKey || e.shiftKey) return;
 
         // User already at the top
         if (contentNav.scrollTop < 1) {
@@ -105,6 +105,10 @@ export default function Content() {
 
     useEffect(() => {
         if (!openedTabs.head){
+            for (let i = 0; i < fileTree[0].files.length; i++) {
+                const newNode = new Node(fileTree[0].files[i])
+                dispatch(addOpenedTabs(newNode))
+            }
             const newNode = new Node(fileTree[0].files[0])
             dispatch(addOpenedTabs(newNode))
         }
