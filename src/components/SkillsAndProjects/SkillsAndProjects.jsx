@@ -11,10 +11,12 @@ import {
 import Cursor from "./shared/Cursor"
 import Project from "./shared/Project"
 import Skill from "./shared/Skill"
+import ContentContainer from "../Content/shared/ContentContainer"
 
 export default function SkillsAndProjects() {
 
     const skillsData = useSelector(state => state.skillsAndProjects.skills)
+    const projectsData = useSelector(state => state.skillsAndProjects.projects)
     
     // const baseText = 'Skills'
     // const count = useMotionValue(0)
@@ -35,26 +37,63 @@ export default function SkillsAndProjects() {
 
     const getSkills = () => (
         <div key={'skills-container'} className="skills-container">
-            {skillsData.map(eachSkill => {
-                return (
-                    <div key={eachSkill.id} className="skill-column-container">
-                        <div className="subtitle-container skill-heading-container">
-                            <p className="skill-heading">
-                                {eachSkill.label}
-                            </p>
-                        </div>
-                        <div className="text-content-container skills-list-container">
-                            {eachSkill.content.map((eachContent, idx) => (
-                                <Skill 
-                                    className="each-skill"
-                                    skill={eachContent.label}
-                                    id={eachContent.id}
-                                />
-                            ))}
-                        </div>
+            {skillsData.map(eachSkill => (
+                <div key={eachSkill.id} className="skill-column-container">
+                    <div className="subtitle-container skill-heading-container">
+                        <p className="skill-heading">
+                            {eachSkill.label}
+                        </p>
                     </div>
-                )
-            })}
+                    <div className="text-content-container skills-list-container">
+                        {eachSkill.content.map((eachContent, idx) => (
+                            <Skill 
+                                className="each-skill"
+                                skill={eachContent.label}
+                                id={eachContent.id}
+                            />
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+
+    const getProjects = () => (
+        <div className="projects-container" key={'projects-container'}>
+            {projectsData.map(eachProject => (
+                <ContentContainer
+                    className='each-project-container about-card-container'
+                    borderColor="radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(44,44,46,1) 35%, rgba(70,74,75,1) 100%)"
+                    borderWidth={2}
+                    key={eachProject.id}
+                    styles={{
+                        padding: '1rem 0.5rem',
+                        margin: '1rem 0',
+                    }}
+                >
+                    <div className="subtitle-container">
+                        <p 
+                            className="project-heading"
+                            style={{ fontSize: '1rem', fontWeight: '700' }}
+                        >
+                            {eachProject.title}
+                        </p>
+                    </div>
+                    <div 
+                        className="project-content-container text-content-container"
+                        style={{ padding: '0.5rem 0.5rem' }}
+                    >                        
+                    {eachProject?.content?.map(eachData => (
+                            <li 
+                                key={eachData.contentId} 
+                                className="projects-content-point" 
+                            >
+                                {eachData.data}
+                            </li>
+                        ))}
+                    </div>
+                </ContentContainer>
+            ))}
         </div>
     )
         
@@ -87,6 +126,11 @@ export default function SkillsAndProjects() {
                             color: '#e7c6ff',
                         }}
                     >Projects</span>
+                </div>
+                <div 
+                    className="projects-content-container"
+                >
+                    {getProjects()}
                 </div>
             </div>
         </div>

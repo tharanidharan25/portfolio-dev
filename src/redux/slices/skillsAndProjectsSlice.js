@@ -26,11 +26,11 @@ const initialState = {
             level: '80%'
         }, {
             id: 'html',
-            label: 'HTML',
+            label: 'HTML5',
             level: '90%'
         }, {
             id: 'css',
-            label: 'CSS',
+            label: 'CSS3',
             level: '90%'
         }]
     }, {
@@ -80,8 +80,26 @@ const initialState = {
     }],
     projects: [{
         id: 'apAutomation',
-        label: "AP Automation",
-        
+        title: "AP Automation",
+        techStack: ['React.Js, Redux Toolkit, Material UI'],
+        content: [{
+            contentId: 1,
+            data: 'Cloud based accounts payable automation software captures invoices digitally, enabling touchless processing, approval and posting.'
+        }, {
+            contentId: 2,
+            data: 'Reduced Invoice Processing Costs by 85%, Features Real-time tracking and automated workflows'
+        }, {
+            contentId: 3,
+            data: 'Developed Invoice Management, SLA charts and Rule-based NON-PO coding systems for improved efficiency.'
+        }]
+    }, {
+        id: 'portfolio',
+        title: "Portfolio Site",
+        techStack: ['React.Js', 'Redux Toolkit', 'Framer Motion'],
+        content: [{
+            contentId: 4,
+            data: 'VS Code Themed portfolio site includes Profile, Skills, Projects, Education and more.'
+        }]
     }]
 }
 
@@ -92,3 +110,7 @@ const skillsAndProjectsSlice = createSlice({
 })
 
 export default skillsAndProjectsSlice.reducer;
+
+
+// https://tympanus.net/Development/ImageRevealHover/
+// https://www.hover.dev/components/links

@@ -49,6 +49,7 @@ export default function Content() {
                 }
                 if (openedTabs?.currentContent?.prev) {
                     dispatch(addOpenedTabs(openedTabs.currentContent.prev));
+                    contentNav.scrollTo(0, 0)
                     return
                 }
             } else if ((contentNav.scrollHeight - contentNav.clientHeight) < 1) {
@@ -57,12 +58,14 @@ export default function Content() {
                 if (e.nativeEvent.wheelDeltaY <= -120) {
                     if (openedTabs?.currentContent?.next) {
                         dispatch(addOpenedTabs(openedTabs.currentContent.next));
+                        contentNav.scrollTo(0, 0)
                         return
                     } 
                     else {
                         const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
                         if (nextFile) {
                             dispatch(addOpenedTabs(new Node(nextFile)));
+                            contentNav.scrollTo(0, 0)
                             return
                         }
                     }
@@ -83,12 +86,14 @@ export default function Content() {
             if (e.nativeEvent.wheelDeltaY <= -120) {
                 if (openedTabs?.currentContent?.next) {
                     dispatch(addOpenedTabs(openedTabs.currentContent.next));
+                    contentNav.scrollTo(0, 0)
                     return
                 } 
                 else {
                     const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
                     if (nextFile) {
                         dispatch(addOpenedTabs(new Node(nextFile)));
+                        contentNav.scrollTo(0, 0)
                         return
                     }
                 }
@@ -133,7 +138,6 @@ export default function Content() {
                     style={{
                         color: '#fff',
                         padding: '1rem',
-                        paddingBottom: '3rem',
                         overflow: 'auto',
                     }}
                 >

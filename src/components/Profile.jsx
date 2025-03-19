@@ -53,8 +53,9 @@ export default function Profile() {
                         </div>
                         <ContentContainer 
                             className="about-card-container"
-                            borderColor="rgb(97, 62, 163)"
-                            borderWidth={2}
+                            // borderColor="rgb(97, 62, 163)"
+                            borderColor="radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(44,44,46,1) 35%, rgba(70,74,75,1) 100%)"
+                            borderWidth={1}
                             key={'about-container'}
                         >
                             <div className="subtitle-container">
@@ -116,7 +117,7 @@ export default function Profile() {
                                         window.open(eachContact.link, `${eachContact.id !== 'mail' ? '_blank' : '_self'}`)
                                     }}
                                     borderColor={eachContact.borderColor}
-                                    borderWidth={4}
+                                    borderWidth={2}
                                     whileHover = {{
                                         rotate: '2.5deg',
                                         scale: 1.05,
