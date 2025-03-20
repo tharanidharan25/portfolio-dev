@@ -81,7 +81,7 @@ const initialState = {
     projects: [{
         id: 'apAutomation',
         title: "AP Automation",
-        techStack: ['React.Js, Redux Toolkit, Material UI'],
+        techStack: ['React.Js', 'Redux Toolkit', 'Material UI'],
         content: [{
             contentId: 1,
             data: 'Cloud based accounts payable automation software captures invoices digitally, enabling touchless processing, approval and posting.'
@@ -99,6 +99,12 @@ const initialState = {
         content: [{
             contentId: 4,
             data: 'VS Code Themed portfolio site includes Profile, Skills, Projects, Education and more.'
+        }, {
+            contentId: 5,
+            data: 'The portfolio site highlights my skills in creating dynamic, visually engaging websites, with a focus on performance optimization, and smooth animations.'
+        }, {
+            contentId: 6,
+            data: 'Serves as a comprehensive display of my capabilities, from front-end design to advanced React functionality, with an emphasis on user-centric experiences.'
         }]
     }]
 }

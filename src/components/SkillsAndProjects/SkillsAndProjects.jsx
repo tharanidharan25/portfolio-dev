@@ -35,6 +35,63 @@ export default function SkillsAndProjects() {
     //     return controls.stop
     // }, [])
 
+    const Project = ({projectData}) => (
+        <>
+            <div className="subtitle-container">
+                <p 
+                    className="project-heading"
+                    style={{ fontSize: '1.25rem', fontWeight: '700' }}
+                >
+                    {projectData.title}
+                </p>
+            </div>
+            <div 
+                className="tech-stack-container"
+                style={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                }}
+            >
+                <div 
+                    className="tech-stack-title text-content-container"
+                    style={{ 
+                        color: '#e7c6ff'
+                    }}
+                >
+                    <p className="tech-stack-title">Tech Stack:</p>
+                </div>
+                <div 
+                    className="tech-stack-content text-content-container"
+                    style={{
+                        display: 'flex',
+                        gap: '0.25rem',
+                        color: '#fff'
+                    }}
+                >
+                    {projectData.techStack.map((eachTech, idx) => (
+                        <p className="each-tech">
+                            {`${eachTech}${idx < (projectData.techStack.length - 1) ? ',' : ''}`}
+                        </p>
+                    ))}
+                </div>
+            </div>
+            <div 
+                className="project-content-container text-content-container"
+                style={{ padding: '0.5rem 0.5rem' }}
+            >                        
+            {projectData?.content?.map(eachData => (
+                    <li 
+                        key={eachData.contentId} 
+                        className="projects-content-point" 
+                    >
+                        {eachData.data}
+                    </li>
+                ))}
+            </div>
+        </>
+    )
+
     const getSkills = () => (
         <div key={'skills-container'} className="skills-container">
             {skillsData.map(eachSkill => (
@@ -69,29 +126,12 @@ export default function SkillsAndProjects() {
                     styles={{
                         padding: '1rem 0.5rem',
                         margin: '1rem 0',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.35rem'
                     }}
                 >
-                    <div className="subtitle-container">
-                        <p 
-                            className="project-heading"
-                            style={{ fontSize: '1rem', fontWeight: '700' }}
-                        >
-                            {eachProject.title}
-                        </p>
-                    </div>
-                    <div 
-                        className="project-content-container text-content-container"
-                        style={{ padding: '0.5rem 0.5rem' }}
-                    >                        
-                    {eachProject?.content?.map(eachData => (
-                            <li 
-                                key={eachData.contentId} 
-                                className="projects-content-point" 
-                            >
-                                {eachData.data}
-                            </li>
-                        ))}
-                    </div>
+                    <Project projectData={eachProject} />
                 </ContentContainer>
             ))}
         </div>
