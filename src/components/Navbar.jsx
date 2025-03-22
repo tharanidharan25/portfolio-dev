@@ -33,11 +33,16 @@ const tabs = [
     }
 ];
 
-export default function Navbar() {
+export default function Navbar({
+    setReachedTop,
+    setReachedEnd
+}) {
 
     const dispatch = useDispatch();
     const currTab = useSelector(state => state.nav.currentTab);
     const fileTree = useSelector(state => state.nav.fileTree);
+    
+    const contentContainer = document.querySelector("#content");
 
     const handleTabClick = (newValue) => {
         if (newValue === currTab) {
@@ -181,6 +186,9 @@ export default function Navbar() {
                                             <ReusableNavBtn
                                                 className={idx}
                                                 onClick={(e) => {
+                                                    setReachedTop(true)
+                                                    setReachedEnd(false)
+                                                    contentContainer.scrollTo(0, 0)
                                                     const newNode = new Node(eachFile)
                                                     dispatch(addOpenedTabs(newNode))
                                                 }}

@@ -5,7 +5,10 @@ import ContentTabBtn from "./shared/ContentTabBtn";
 import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
 import { AnimatePresence, motion } from 'motion/react';
 
-export default function ContentNav() {
+export default function ContentNav({ 
+    handleOpenedTabClick,
+    handleCloseOpenedTab
+}) {
     const dispatch = useDispatch();
 
     const tabs = useSelector(state => state.content.tabs) || [];
@@ -15,8 +18,8 @@ export default function ContentNav() {
         tabs.map((eachTab, idx) => (
             <ContentTabBtn 
                 key={eachTab.data.id}
-                onClick={() => dispatch(addOpenedTabs(eachTab))}
-                onClose={() => dispatch(closeOpenedTab(eachTab))}
+                onClick={() => handleOpenedTabClick(eachTab)}
+                onClose={() => handleCloseOpenedTab(eachTab)}
                 label={eachTab.data.label}
                 currentTab={openedTabs.currentContent?.data?.id === eachTab.data.id || false}
             />
@@ -30,6 +33,7 @@ export default function ContentNav() {
                 style={{
                     display: 'flex',
                     background: '#2d2f2d',
+                    overflow: 'auto'
                 }}
                 id="contentNav"
             >

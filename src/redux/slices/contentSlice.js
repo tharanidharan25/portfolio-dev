@@ -68,7 +68,9 @@ const initialState = {
     openedTabs: new LinkedList(),
     openedTabsHash: {},
     tabs: [],
-    currentContent: null
+    currentContent: null,
+    reachedTop: true,
+    reachedEnd: false
 }
 
 const contentSlice = createSlice({
@@ -86,23 +88,35 @@ const contentSlice = createSlice({
                 newOpenedHashTabs[payload.data.id] = payload
                 state.openedTabsHash = { ...newOpenedHashTabs }
             }
-            state.tabs = state.openedTabs.traverse();
-            state.currentContent = state.openedTabs.currentContent?.data?.id || null;
+            state.tabs = state.openedTabs.traverse()
+            state.currentContent = state.openedTabs.currentContent?.data?.id || null
+            state.reachedTop = true
+            state.reachedEnd = false
         },
         closeOpenedTab: (state, { payload }) => { // payload is a Node
             state.openedTabs.deleteNode(payload)
-            state.tabs = state.openedTabs.traverse();
-            state.currentContent = state.openedTabs.currentContent?.data?.id || null;
+            state.tabs = state.openedTabs.traverse()
+            state.currentContent = state.openedTabs.currentContent?.data?.id || null
             const newOpenedHashTabs = { ...state.openedTabsHash }
             delete newOpenedHashTabs[payload.data.id]
             state.openedTabsHash = { ...newOpenedHashTabs }
+            state.reachedTop = true
+            state.reachedEnd = false
+        },
+        setReachedTop: (state, { payload }) => {
+            state.reachedTop = payload
+        },
+        setReachedEnd: (state, { payload }) => {
+            state.reachedEnd = payload
         }
     }
 })
 
 export const {
     addOpenedTabs,
-    closeOpenedTab
+    closeOpenedTab,
+    setReachedTop,
+    setReachedEnd
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

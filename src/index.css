@@ -38,7 +38,6 @@ html {
     display: grid;
     grid-template-columns: 30% 30% 30%;
     gap: 5%;
-    padding: 4px 4px;
     color: #eeffff;
     background-color: #2d2f2d;
     font-weight: 100;
@@ -55,13 +54,13 @@ html {
     display: flex;
     align-items: center;
     letter-spacing: 1.15;
-    padding: 0.15rem;
+    padding: 0.15rem 0.2rem;
     transition: all 50ms ease-in-out;
+    border-radius: 2px;
 }
 
 .menu-btn:hover {
     background: #1d201d;
-    color: #84a98c;
 }
 
 .title-bar .logo {
@@ -73,6 +72,7 @@ html {
     display: flex;
     align-items: center;
     gap: 1em;
+    padding: 4px;
 }
 
 .title-bar-navigation {
@@ -132,6 +132,7 @@ html {
 .tabs-container {
     background-color: #222422;
     overflow-x: auto;
+    min-width: 48px;
 }
 
 .tabs-container,
@@ -289,6 +290,7 @@ html {
 .skill-heading-container {
     font-weight: 700;
     margin-bottom: 1rem;
+    white-space: nowrap;
 }
 
 .skill-column-container {

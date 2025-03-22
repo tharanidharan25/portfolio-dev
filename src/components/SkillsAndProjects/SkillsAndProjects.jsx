@@ -56,7 +56,8 @@ export default function SkillsAndProjects() {
                 <div 
                     className="tech-stack-title text-content-container"
                     style={{ 
-                        color: '#e7c6ff'
+                        color: '#e7c6ff',
+                        whiteSpace: 'nowrap'
                     }}
                 >
                     <p className="tech-stack-title">Tech Stack:</p>
@@ -66,11 +67,12 @@ export default function SkillsAndProjects() {
                     style={{
                         display: 'flex',
                         gap: '0.25rem',
-                        color: '#fff'
+                        color: '#fff',
+                        whiteSpace: 'nowrap'
                     }}
                 >
                     {projectData.techStack.map((eachTech, idx) => (
-                        <p className="each-tech">
+                        <p className="each-tech" >
                             {`${eachTech}${idx < (projectData.techStack.length - 1) ? ',' : ''}`}
                         </p>
                     ))}

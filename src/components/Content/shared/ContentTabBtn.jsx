@@ -52,6 +52,7 @@ export default function ContentTabBtn({
                         fontSize: '14px',
                         color: '#fff',
                         cursor: 'pointer',
+                        whiteSpace: 'nowrap',
                         ...props?.style,
                     }}
                 >
@@ -65,7 +66,10 @@ export default function ContentTabBtn({
                         padding: '2px',
                         transition: '200ms ease-in-out'
                     }}
-                    onClick={onClose}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onClose()
+                    }}
                     className="content-nav-close"
                 >
                     <VscChromeClose 
