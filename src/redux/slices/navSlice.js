@@ -7,16 +7,20 @@ const initialState = {
             key: 'portfolio',
             files: [{
                 id: 'profile',
-                label: 'Profile.js'
+                label: 'Profile.js',
+                fileType: 'js'
             }, {
                 id: 'skillsAndProjects',
-                label: 'Skills and Projects.js'
+                label: 'Skills and Projects.js',
+                fileType: 'js'
             }, {
                 id : 'education',
-                label: 'Education.js'
+                label: 'Education.js',
+                fileType: 'js'
             }, {
-                id: 'interests',
-                label: 'Interests.js'
+                id: 'resume',
+                label: 'Resume.pdf',
+                fileType: 'pdf'
             }],
             isExpanded: true,
         }

@@ -10,6 +10,7 @@ import {
     VscChevronDown
 } from "react-icons/vsc";
 import { FaJsSquare } from "react-icons/fa";
+import { ImFilePdf } from "react-icons/im";
 
 import ReusableNavBtn from "../utils/ReusableNavBtn";
 
@@ -201,10 +202,13 @@ export default function Navbar({
                                                         width: '100%'
                                                     }}
                                                 >
-                                                    <FaJsSquare  
+                                                    {eachFile.fileType.toLowerCase() === 'js' ? <FaJsSquare  
                                                         color="rgb(255, 255, 0)"
                                                         size={14}
-                                                    />
+                                                    /> : <ImFilePdf 
+                                                        color="#c1121f"
+                                                        size={14}
+                                                    />}
                                                     <p
                                                         style={{
                                                             whiteSpace: 'nowrap',

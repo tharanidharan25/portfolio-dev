@@ -165,6 +165,7 @@ export default function Profile() {
     return (
         <div 
             className="profile-container"
+            style={{ paddingBottom: '1rem'}}
         >
             <div
                 style={{

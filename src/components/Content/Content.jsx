@@ -6,10 +6,10 @@ import { AnimatePresence, motion } from 'motion/react';
 import Profile from "../Profile";
 import Education from "../Education";
 import SkillsAndProjects from "../SkillsAndProjects/SkillsAndProjects";
-import Interests from "../Interests";
 
 import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
 import ContentNav from "./ContentNav";
+import Resume from "../Resume";
 
 export class Node {
     constructor(element) {
@@ -40,11 +40,11 @@ export default function Content({
 
         // User already at the top
         if (contentContainer.scrollTop < 1) {
-            if (e.nativeEvent.wheelDeltaY >= 120) {
+            if (e.nativeEvent.wheelDeltaY >= 90) {
 
                 // There's not enough content to cause scroll
                 // User reached top
-                if (!((contentContainer.scrollHeight - contentContainer.clientHeight) < 1) && !reachedTop) {
+                if (!((contentContainer.scrollHeight - contentContainer.clientHeight) < 2) && !reachedTop) {
                     setReachedTop(true)
                     setReachedEnd(false)
                     return
@@ -54,10 +54,10 @@ export default function Content({
                     contentContainer.scrollTo(0, 0)
                     return
                 }
-            } else if ((contentContainer.scrollHeight - contentContainer.clientHeight) < 1) {
+            } else if ((contentContainer.scrollHeight - contentContainer.clientHeight) < 2) {
                 
                 // User reached bottom as well since there's not enough content to cause scroll
-                if (e.nativeEvent.wheelDeltaY <= -120) {
+                if (e.nativeEvent.wheelDeltaY <= -90) {
                     if (openedTabs?.currentContent?.next) {
                         dispatch(addOpenedTabs(openedTabs.currentContent.next));
                         contentContainer.scrollTo(0, 0)
@@ -76,16 +76,16 @@ export default function Content({
         }
 
         // There's content to be able to scroll and user has reached bottom
-        if (Math.abs(contentContainer.scrollHeight - (contentContainer.scrollTop + contentContainer.clientHeight)) < 1) {
+        if (Math.abs(contentContainer.scrollHeight - (contentContainer.scrollTop + contentContainer.clientHeight)) < 2) {
             if (!reachedEnd) {
                 // User has reached bottom for the first time
                 setReachedTop(false);
                 setReachedEnd(true);
                 return
-            }
-            setReachedTop(true); // Moving to next file, so user has already reached top of the new file
-            setReachedEnd(false);
-            if (e.nativeEvent.wheelDeltaY <= -120) {
+            }            
+            if (e.nativeEvent.wheelDeltaY <= -90) {
+                setReachedTop(true); // Moving to next file, so user has already reached top of the new file
+                setReachedEnd(false);
                 if (openedTabs?.currentContent?.next) {
                     dispatch(addOpenedTabs(openedTabs.currentContent.next));
                     contentContainer.scrollTo(0, 0)
@@ -154,12 +154,13 @@ export default function Content({
                         color: '#fff',
                         padding: '1rem',
                         overflow: 'auto',
+                        paddingBottom: 0
                     }}
                 >
                     {currentContent == 'profile' && <Profile key={'profile'}/>}
                     {currentContent == 'education' && <Education key={'education'}/>}
                     {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'}/>}
-                    {currentContent == 'interests' && <Interests key={'interests'}/>}
+                    {currentContent == 'resume' && <Resume key={'interests'}/>}
                 </motion.div>
             </AnimatePresence>
         </main>

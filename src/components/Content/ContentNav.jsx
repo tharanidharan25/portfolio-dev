@@ -9,8 +9,6 @@ export default function ContentNav({
     handleOpenedTabClick,
     handleCloseOpenedTab
 }) {
-    const dispatch = useDispatch();
-
     const tabs = useSelector(state => state.content.tabs) || [];
     const openedTabs = useSelector(state => state.content.openedTabs);
 
@@ -22,6 +20,7 @@ export default function ContentNav({
                 onClose={() => handleCloseOpenedTab(eachTab)}
                 label={eachTab.data.label}
                 currentTab={openedTabs.currentContent?.data?.id === eachTab.data.id || false}
+                fileType={eachTab.data.fileType}
             />
 
         ))

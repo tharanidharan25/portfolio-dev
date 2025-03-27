@@ -1,13 +1,15 @@
 import { VscChromeClose } from "react-icons/vsc";
 import { FaJsSquare } from "react-icons/fa";
+import { ImFilePdf } from "react-icons/im";
 
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 
 export default function ContentTabBtn({
     label = "",
     onClick = () => {},
     onClose = () => {},
     currentTab = false,
+    fileType = 'js',
     ...props
 }) {
     return (
@@ -37,10 +39,15 @@ export default function ContentTabBtn({
                     position: 'relative',
                 }}
             >
-                <div><FaJsSquare 
-                    color="rgb(255, 255, 0)"
-                    size={14}
-                /></div>
+                <div>
+                    {fileType.toLowerCase() === 'js' ? <FaJsSquare 
+                        color="rgb(255, 255, 0)"
+                        size={14}
+                    /> : <ImFilePdf 
+                        color="#c1121f"
+                        size={14}
+                    />}
+                </div>
                 <button 
                     className="content-tab-btn"
                     onClick={onClick}
