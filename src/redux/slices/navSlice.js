@@ -14,10 +14,6 @@ const initialState = {
                 label: 'Skills and Projects.js',
                 fileType: 'js'
             }, {
-                id : 'education',
-                label: 'Education.js',
-                fileType: 'js'
-            }, {
                 id: 'resume',
                 label: 'Resume.pdf',
                 fileType: 'pdf'
@@ -25,7 +21,7 @@ const initialState = {
             isExpanded: true,
         }
     ],
-    currentTab: 'files', // Possible values - files, search, git
+    currentTab: null, // Possible values - files, search, git
 }
 
 const navSlice = createSlice({

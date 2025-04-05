@@ -9,7 +9,7 @@ import SkillsAndProjects from "../SkillsAndProjects/SkillsAndProjects";
 
 import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
 import ContentNav from "./ContentNav";
-import Resume from "../Resume";
+import Resume from "../Resume/Resume";
 
 export class Node {
     constructor(element) {
@@ -96,8 +96,8 @@ export default function Content({
                     if (nextFile) {
                         dispatch(addOpenedTabs(new Node(nextFile)));
                         contentContainer.scrollTo(0, 0)
-                        return
                     }
+                    return
                 }
             }
         }

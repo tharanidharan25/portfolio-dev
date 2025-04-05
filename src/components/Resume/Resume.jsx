@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { pdfjs, Document, Page } from "react-pdf"
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"
 import "react-pdf/dist/esm/Page/TextLayer.css"
-import { VscCloudDownload } from "react-icons/vsc";
+
+import { MdOutlineFileDownload } from "react-icons/md";
 
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min?url"
+
+import DownloadBtn from "./DownloadBtn";
+
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker
-
-
 
 export default function Resume() {
     const [numPages, setNumPages] = useState(null)
@@ -41,46 +43,42 @@ export default function Resume() {
         )
     }
 
-    useEffect(() => {
-        if (pdfContainerRef.current) {
-            const links = pdfContainerRef.current.querySelectorAll("a");
-            links.forEach((link) => {
-                link.setAttribute("target", "_blank");
-                link.setAttribute("rel", "noopener noreferrer");
-            });
-        }
-    }, [numPages]);
 
     return (
         <>
-            <div 
-                ref={pdfContainerRef}
-                style={{ 
-                    display: "flex", 
-                    justifyContent: "center",
-                }}
-                id="resumeContainer"
-            >
-                {/* <div
-                    style={{
-                        position: 'relative',
-                        width: 'fit-content'
+            {useMemo(() => (
+                <div 
+                    ref={pdfContainerRef}
+                    style={{ 
+                        display: "flex", 
+                        justifyContent: "center",
                     }}
-                > */}
-                    {/* <div
-                        style={{ 
-                            position: 'absolute',
-                            zIndex: 9999,
-                            right: 0
+                    id="resumeContainer"
+                >
+                    <div
+                        style={{
+                            position: 'relative',
+                            width: 'fit-content'
                         }}
                     >
-                        <a href="/assets/tharanidharan.pdf" download={'tharanidharan.pdf'}>
-                            <VscCloudDownload color="#000" />
-                        </a>
-                    </div> */}
-                    <ResumePDF />
+                        <div
+                            style={{ 
+                                position: 'absolute',
+                                zIndex: 9999,
+                                right: 0
+                            }}
+                        >
+                            <DownloadBtn
+                                filePath="/assets/tharanidharan.pdf" 
+                                fileName={'tharanidharan.pdf'}
+                            >
+                                <MdOutlineFileDownload color="#fff" />
+                            </DownloadBtn>
+                        </div>
+                        <ResumePDF />
+                    </div>
                 </div>
-            {/* </div> */}
+            ), [])}
         </>
     )
 }

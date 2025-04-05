@@ -338,3 +338,31 @@ html {
 .each-skill:hover {
     color: #fff;
 }
+
+.download-btn {
+    display: block;
+    margin: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    background: #000;
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid black;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+}
+
+.download-btn svg {
+    transition: all 0.25s ease-in-out;
+}
+
+.download-btn:hover {
+    background: #fff;
+}
+
+.download-btn:hover svg {
+    color: #000 !important;
+}
