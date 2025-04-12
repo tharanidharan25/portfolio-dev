@@ -51,7 +51,7 @@ export default function Profile() {
                                 }}
                             >{data.title}</p>
                         </div>
-                        <ContentContainer 
+                        <ContentContainer
                             className="about-card-container"
                             // borderColor="rgb(97, 62, 163)"
                             borderColor="radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(44,44,46,1) 35%, rgba(70,74,75,1) 100%)"
@@ -76,11 +76,11 @@ export default function Profile() {
                 return (
                     <div
                         style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.75rem',
-                                ...data.style,
-                            }}
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.75rem',
+                            ...data.style,
+                        }}
                     >
                         <div className="title-container">
                             <p
@@ -93,11 +93,6 @@ export default function Profile() {
                         </div>
                         <motion.div
                             className="contacts-container"
-                            style={{
-                                display: 'flex',
-                                gap: '1rem',
-                                height: 240
-                            }}
                         >
                             {data.contacts.map(eachContact => (
                                 <ContentContainer
@@ -118,7 +113,7 @@ export default function Profile() {
                                     }}
                                     borderColor={eachContact.borderColor}
                                     borderWidth={2}
-                                    whileHover = {{
+                                    whileHover={{
                                         rotate: '2.5deg',
                                         scale: 1.05,
                                         zIndex: 1000,
@@ -156,16 +151,16 @@ export default function Profile() {
                         </motion.div>
                     </div>
                 )
-            
+
             default:
                 return null
         }
     }
 
     return (
-        <div 
+        <div
             className="profile-container"
-            style={{ paddingBottom: '1rem'}}
+            style={{ paddingBottom: '1rem' }}
         >
             <div
                 style={{
@@ -183,7 +178,7 @@ export default function Profile() {
                 </h2>
             </div>
             <section className="data-container">
-                <div 
+                <div
                     className="each-data-container"
                     style={{
                         display: 'grid',

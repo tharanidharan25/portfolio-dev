@@ -27,7 +27,8 @@ html {
 
 .page-content {
     display: flex;
-    height: 95%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .search-button svg {
@@ -127,6 +128,7 @@ html {
 .navbar {
     display: flex;
     overflow: auto;
+    min-width: fit-content;
 }
 
 .tabs-container {
@@ -177,6 +179,7 @@ html {
     display: flex;
     width: 100%;
     background: black;
+    overflow: auto;
 }
 
 .navbar-icons {
@@ -193,10 +196,15 @@ html {
     border-radius: 9999px;
 }
 
+.content-header {
+    overflow: auto;
+    min-height: fit-content;
+}
+
 .part-of-me {
     color: indigo;
     font-weight: 500;
-    font-size: 9rem;
+    font-size: 7rem;
     transition: all 0.25s ease-in-out;
     text-decoration: underline;
     font-family: "Jersey 15", sans-serif;
@@ -233,6 +241,12 @@ html {
     /* --a: hsla(211, 96%, 78%, 40%);
     --b: hsla(211, 96%, 78%, 0%);
     background: radial-gradient(circle at center, var(--a), var(--b)); */
+}
+
+.contacts-container {
+    display: flex;
+    gap: 1rem;
+    height: 240px;
 }
 
 .title-container {
@@ -339,6 +353,12 @@ html {
     color: #fff;
 }
 
+.tech-stack-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .download-btn {
     display: block;
     margin: 0.25rem;
@@ -349,7 +369,7 @@ html {
     transition: all 0.25s ease-in-out;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid #fff;
     text-decoration: none;
     color: #fff;
     display: flex;
@@ -361,8 +381,74 @@ html {
 
 .download-btn:hover {
     background: #fff;
+    color: #000;
 }
 
 .download-btn:hover svg {
     color: #000 !important;
+}
+
+.pdf-btns-container {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    margin: 1rem auto;
+    width: 30px;
+    height: 30px;
+    border: 4px solid #ccc;
+    border-top: 4px solid #333;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 900px) {
+    .part-of-me {
+        font-size: 5rem;
+    }
+
+    .contacts-container {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .part-of-me {
+        font-size: 3rem;
+    }
+
+    .contacts-container {
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .part-of-me {
+        font-size: 2rem;
+    }
+
+    .contacts-container {
+        height: 120px;
+    }
+
+    .skill-column-container {
+        flex-direction: column;
+    }
+    
+    .skills-list-container {
+        margin: 0;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .tech-stack-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: start;
+    }
 }

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
-import { 
+import {
     motion,
     useMotionValue,
     useTransform,
@@ -17,7 +17,7 @@ export default function SkillsAndProjects() {
 
     const skillsData = useSelector(state => state.skillsAndProjects.skills)
     const projectsData = useSelector(state => state.skillsAndProjects.projects)
-    
+
     // const baseText = 'Skills'
     // const count = useMotionValue(0)
     // const rounded = useTransform(count, latest => Math.round(latest))
@@ -35,34 +35,29 @@ export default function SkillsAndProjects() {
     //     return controls.stop
     // }, [])
 
-    const Project = ({projectData}) => (
+    const Project = ({ projectData }) => (
         <>
             <div className="subtitle-container">
-                <p 
+                <p
                     className="project-heading"
                     style={{ fontSize: '1.25rem', fontWeight: '700' }}
                 >
                     {projectData.title}
                 </p>
             </div>
-            <div 
+            <div
                 className="tech-stack-container"
-                style={{ 
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                }}
             >
-                <div 
+                <div
                     className="tech-stack-title text-content-container"
-                    style={{ 
+                    style={{
                         color: '#e7c6ff',
                         whiteSpace: 'nowrap'
                     }}
                 >
                     <p className="tech-stack-title">Tech Stack:</p>
                 </div>
-                <div 
+                <div
                     className="tech-stack-content text-content-container"
                     style={{
                         display: 'flex',
@@ -78,14 +73,14 @@ export default function SkillsAndProjects() {
                     ))}
                 </div>
             </div>
-            <div 
+            <div
                 className="project-content-container text-content-container"
                 style={{ padding: '0.5rem 0.5rem' }}
-            >                        
-            {projectData?.content?.map(eachData => (
-                    <li 
-                        key={eachData.contentId} 
-                        className="projects-content-point" 
+            >
+                {projectData?.content?.map(eachData => (
+                    <li
+                        key={eachData.contentId}
+                        className="projects-content-point"
                     >
                         {eachData.data}
                     </li>
@@ -105,7 +100,7 @@ export default function SkillsAndProjects() {
                     </div>
                     <div className="text-content-container skills-list-container">
                         {eachSkill.content.map((eachContent, idx) => (
-                            <Skill 
+                            <Skill
                                 className="each-skill"
                                 skill={eachContent.label}
                                 id={eachContent.id}
@@ -138,7 +133,7 @@ export default function SkillsAndProjects() {
             ))}
         </div>
     )
-        
+
     return (
         <div className="skills-projects-container">
             <div className="skills">
@@ -152,7 +147,7 @@ export default function SkillsAndProjects() {
                         }}
                     >Skills</span>
                 </div>
-                <div 
+                <div
                     className="skills-content-container"
                 >
                     {getSkills()}
@@ -169,7 +164,7 @@ export default function SkillsAndProjects() {
                         }}
                     >Projects</span>
                 </div>
-                <div 
+                <div
                     className="projects-content-container"
                 >
                     {getProjects()}
