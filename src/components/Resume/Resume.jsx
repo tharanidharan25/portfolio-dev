@@ -76,18 +76,6 @@ export default function Resume() {
                 id="resumeContainer"
             >
                 <div style={{ position: "relative", width: "100%" }}>
-                    {/* {!isLoading && (
-                        <div
-                            style={{
-                                position: "absolute",
-                                zIndex: 9999,
-                                right: 0,
-                            }}
-                        >
-                            
-                        </div>
-                    )} */}
-
                     <Document
                         file={memoizedFile}
                         onLoadSuccess={({ numPages }) => setNumPages(numPages)}

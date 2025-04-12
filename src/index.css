@@ -203,6 +203,7 @@ html {
 
 .part-of-me {
     color: indigo;
+    /* color: #af6fde; */
     font-weight: 500;
     font-size: 7rem;
     transition: all 0.25s ease-in-out;
@@ -391,6 +392,11 @@ html {
 .pdf-btns-container {
     display: flex;
     justify-content: center;
+}
+
+.react-pdf__Document {
+    width: fit-content;
+    max-width: 100%;
 }
 
 .loader {
