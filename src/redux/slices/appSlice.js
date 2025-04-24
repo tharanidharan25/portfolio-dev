@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     windowWidth: window.innerWidth,
     fullScreened: false,
-    content: 'profile'
+    content: 'profile',
+    isMobile: false
 }
 
 const appSlice = createSlice({
@@ -18,6 +19,9 @@ const appSlice = createSlice({
         },
         updateContent: (state, { payload }) => {
             state.content = payload;
+        },
+        updateIsMobile: (state, { payload }) => {
+            state.isMobile = payload
         }
     }
 })
@@ -25,7 +29,8 @@ const appSlice = createSlice({
 export const {
     updateWindowWidth,
     updateFullScreened,
-    updateContent
+    updateContent,
+    updateIsMobile
 } = appSlice.actions;
 
 export default appSlice.reducer;

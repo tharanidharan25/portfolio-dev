@@ -10,6 +10,7 @@ import SkillsAndProjects from "../SkillsAndProjects/SkillsAndProjects";
 import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
 import ContentNav from "./ContentNav";
 import Resume from "../Resume/Resume";
+import NavBarTabContent from "../NavBar/NavBarTabContent";
 
 export class Node {
     constructor(element) {
@@ -32,7 +33,6 @@ export default function Content({
     const openedTabs = useSelector(state => state.content.openedTabs);
     const openedTabsHash = useSelector(state => state.content.openedTabsHash);
     const currentContent = useSelector(state => state.content.currentContent);
-
     const contentContainer = document.querySelector("#content");
 
     const changePage = useCallback(debounce((e) => {
@@ -55,14 +55,14 @@ export default function Content({
                     return
                 }
             } else if ((contentContainer.scrollHeight - contentContainer.clientHeight) < 2) {
-                
+
                 // User reached bottom as well since there's not enough content to cause scroll
                 if (e.nativeEvent.wheelDeltaY <= -90) {
                     if (openedTabs?.currentContent?.next) {
                         dispatch(addOpenedTabs(openedTabs.currentContent.next));
                         contentContainer.scrollTo(0, 0)
                         return
-                    } 
+                    }
                     else {
                         const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
                         if (nextFile) {
@@ -82,7 +82,7 @@ export default function Content({
                 setReachedTop(false);
                 setReachedEnd(true);
                 return
-            }            
+            }
             if (e.nativeEvent.wheelDeltaY <= -90) {
                 setReachedTop(true); // Moving to next file, so user has already reached top of the new file
                 setReachedEnd(false);
@@ -90,7 +90,7 @@ export default function Content({
                     dispatch(addOpenedTabs(openedTabs.currentContent.next));
                     contentContainer.scrollTo(0, 0)
                     return
-                } 
+                }
                 else {
                     const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
                     if (nextFile) {
@@ -103,7 +103,7 @@ export default function Content({
         }
         setReachedEnd(false)
         setReachedTop(false)
-    }, 200),[openedTabsHash, openedTabs, reachedEnd, reachedTop]);
+    }, 200), [openedTabsHash, openedTabs, reachedEnd, reachedTop]);
 
     const handleOpenedTabClick = (tab) => {
         setReachedTop(true)
@@ -121,7 +121,7 @@ export default function Content({
 
 
     useEffect(() => {
-        if (!openedTabs.head){
+        if (!openedTabs.head) {
             for (let i = 0; i < fileTree[0].files.length; i++) {
                 const newNode = new Node(fileTree[0].files[i])
                 dispatch(addOpenedTabs(newNode))
@@ -132,7 +132,8 @@ export default function Content({
     }, [])
 
     return (
-        <main 
+        <div
+            id="pageContent"
             className="content"
             style={{
                 display: 'flex',
@@ -141,13 +142,22 @@ export default function Content({
             onWheel={(e) => changePage(e)} // do for track pad scroll
         >
             <div className="content-header">
-                <ContentNav 
+                <ContentNav
                     handleOpenedTabClick={handleOpenedTabClick}
                     handleCloseOpenedTab={handleCloseOpenedTab}
                 />
             </div>
+            <dialog
+                id="navBarTabContent"
+                className="mobile-navBar"
+            >
+                <NavBarTabContent
+                    setReachedTop={setReachedTop}
+                    setReachedEnd={setReachedEnd}
+                />
+            </dialog>
             <AnimatePresence>
-                <motion.div 
+                <motion.div
                     className="tabs"
                     id="content"
                     style={{
@@ -157,12 +167,12 @@ export default function Content({
                         paddingBottom: 0
                     }}
                 >
-                    {currentContent == 'profile' && <Profile key={'profile'}/>}
-                    {currentContent == 'education' && <Education key={'education'}/>}
-                    {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'}/>}
-                    {currentContent == 'resume' && <Resume key={'interests'}/>}
+                    {currentContent == 'profile' && <Profile key={'profile'} />}
+                    {currentContent == 'education' && <Education key={'education'} />}
+                    {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'} />}
+                    {currentContent == 'resume' && <Resume key={'interests'} />}
                 </motion.div>
             </AnimatePresence>
-        </main>
+        </div>
     )
 }

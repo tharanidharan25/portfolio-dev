@@ -1,116 +1,71 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from 'motion/react';
 
-import { 
-    VscFiles,
-    VscSearch,
-    VscSourceControl,
+import ReusableIconBtn from "../../utils/ReusableIconBtn";
+import ReusableNavBtn from "../../utils/ReusableNavBtn";
+
+import { Node } from "../Content/Content";
+import { updateCurrentTab, updateFileTree } from "../../redux/slices/navSlice";
+import { addOpenedTabs } from "../../redux/slices/contentSlice";
+
+import {
     VscChevronRight,
-    VscChevronDown
+    VscChevronDown,
+    VscClose
 } from "react-icons/vsc";
 import { FaJsSquare } from "react-icons/fa";
 import { ImFilePdf } from "react-icons/im";
 
-import ReusableNavBtn from "../utils/ReusableNavBtn";
-
-import { updateCurrentTab, updateFileTree } from "../redux/slices/navSlice"; 
-import ReusableIconBtn from "../utils/ReusableIconBtn";
-import { addOpenedTabs } from "../redux/slices/contentSlice";
-import { Node } from "./Content/Content";
-
-const tabs = [
-    {
-        name: 'files',
-        icon: <VscFiles className="navbar-icons" />
-    }, 
-    {
-        name:'search',
-        icon: <VscSearch className="navbar-icons" />
-    }, 
-    {
-        name: 'git',
-        icon: <VscSourceControl className='navbar-icons' />
-    }
-];
-
-export default function Navbar({
+export default function NavBarTabContent({
     setReachedTop,
-    setReachedEnd
+    setReachedEnd,
+    className = ''
 }) {
 
-    const dispatch = useDispatch();
-    const currTab = useSelector(state => state.nav.currentTab);
-    const fileTree = useSelector(state => state.nav.fileTree);
-    
-    const contentContainer = document.querySelector("#content");
+    const dispatch = useDispatch()
+    const fileTree = useSelector(state => state.nav.fileTree)
+    const currTab = useSelector(state => state.nav.currentTab)
+    const isMobile = useSelector(state => state.app.isMobile)
 
-    const handleTabClick = (newValue) => {
-        if (newValue === currTab) {
-            dispatch(updateCurrentTab(null))
-            return
-        }
-        dispatch(updateCurrentTab(newValue))
-    }
-    
-    const getTabs = () => {
-        return (
-            tabs.map( eachTab => (
-                <button 
-                    key={eachTab.name} 
-                    className={`tab-btn ${eachTab.name === currTab && 'selected'}`}
-                    onClick={() => handleTabClick(eachTab.name)}
-                    style={{
-                        position: 'relative'
-                    }}
-                >
-                    {
-                        eachTab.name === currTab && 
-                        (<AnimatePresence mode="popLayout" initial={false} >
-                            <motion.span 
-                                key={eachTab.name}
-                                layoutId="selectedTab"
-                                style={{
-                                    background: '#eeffff',
-                                    position: "absolute",
-                                    width: '1px',
-                                    height: '100%',
-                                    inset: 0,
-                                    zIndex: 10,
-                                }}
-                                initial={{ opacity: 1 }}
-                                transition={{ 
-                                    type:"spring", 
-                                    bounce: 0, 
-                                    duration: 0.5,
-                                }}
-                                exit={{
-                                    opacity: 0
-                                }}
-                            />
-                        </AnimatePresence>)
-                    }
-                    {eachTab.icon}
-                </button>
-            ))
-        )
-    }
+    const contentContainer = document.querySelector("#content")
+    const navBarTabContent = document.getElementById("navBarTabContent")
 
-    const getTabContent = () => {
-        if ( currTab === "files" ) {
+    const getContent = () => {
+        if (currTab == 'files') {
             return (
-                fileTree.map((eachTree, idx) => (
-                    <motion.div
-                        key={eachTree.key}
-                        initial={{ y: 2 }}
-                        animate={{ y: 0 }}
-                        exit={{ y: -2 }}
-                        transition={{ 
-                            type: "spring",
-                            duration: 0.2, 
-                            bounce: 0 
-                        }}
-                    >
+                <div className="explorer-container">
+                    <div className="nav-bar-tab-content-title-container">
+                        <p
+                            className="nav-bar-tab-content-title"
+                        >
+                            Explorer
+                        </p>
+                        {
+                            isMobile && <ReusableIconBtn
+                                onClick={() => {
+                                    dispatch(updateCurrentTab(null))
+                                    navBarTabContent.close()
+                                }}
+                            >
+                                <VscClose
+                                    size={16}
+                                    color="#fff"
+                                />
+                            </ReusableIconBtn>
+                        }
+                    </div>
+                    {fileTree.map((eachTree, idx) => (
+                        <motion.div
+                            key={eachTree.key}
+                            initial={{ y: 1 }}
+                            animate={{ y: 0 }}
+                            exit={{ y: -1 }}
+                            transition={{
+                                type: "spring",
+                                duration: 0.2,
+                                bounce: 0
+                            }}
+                        >
                             <ReusableIconBtn
                                 onClick={() => dispatch(updateFileTree({
                                     idx,
@@ -128,37 +83,37 @@ export default function Navbar({
                                     >
                                         <motion.div
                                             key={eachTree.isExpanded ? 'expanded' : 'retracted'}
-                                            initial={{ 
-                                                ...( eachTree.isExpanded && { transform: 'rotate(-90deg)' }),
-                                                ...( !eachTree.isExpanded && { transform: 'rotate(90deg)' }) 
+                                            initial={{
+                                                ...(eachTree.isExpanded && { transform: 'rotate(-90deg)' }),
+                                                ...(!eachTree.isExpanded && { transform: 'rotate(90deg)' })
                                             }}
                                             animate={{ transform: 'rotate(0deg)' }}
-                                            exit={{ 
-                                                ...( eachTree.isExpanded && { transform: 'rotate(-90deg)' }),
-                                                ...( !eachTree.isExpanded && { transform: 'rotate(90deg)' })
+                                            exit={{
+                                                ...(eachTree.isExpanded && { transform: 'rotate(-90deg)' }),
+                                                ...(!eachTree.isExpanded && { transform: 'rotate(90deg)' })
                                             }}
-                                            transition={{ 
+                                            transition={{
                                                 type: "spring",
-                                                duration: 0.2, 
+                                                duration: 0.2,
                                                 bounce: 0,
                                             }}
                                         >
-                                            {eachTree.isExpanded ? ( <VscChevronDown 
+                                            {eachTree.isExpanded ? (<VscChevronDown
                                                 key={'expanded'}
                                                 color="white"
                                                 size={14}
-                                            />) : ( <VscChevronRight
+                                            />) : (<VscChevronRight
                                                 key={'retracted'}
                                                 color="white"
                                                 size={14}
                                             />)}
                                         </motion.div>
                                         <p
-                                            style={{ 
+                                            style={{
                                                 color: 'white',
                                                 fontSize: '14px'
                                             }}
-                                            >
+                                        >
                                             {eachTree.name}
                                         </p>
                                     </motion.div>
@@ -167,12 +122,12 @@ export default function Navbar({
                             <div
                                 key={`${eachTree.key}-files-container`}
                                 style={{
-                                        borderLeft: '1px solid white',
-                                        marginLeft: '0.42rem',
+                                    borderLeft: '1px solid white',
+                                    marginLeft: '0.42rem',
                                 }}
                             >
                                 <AnimatePresence initial={false}>
-                                    {eachTree.isExpanded && eachTree.files.map( (eachFile, idx) => (
+                                    {eachTree.isExpanded && eachTree.files.map((eachFile, idx) => (
                                         <motion.div
                                             key={eachFile.id}
                                             initial={{ y: -5 }}
@@ -180,7 +135,7 @@ export default function Navbar({
                                             exit={{ y: -5 }}
                                             transition={{
                                                 type: "spring",
-                                                duration: 0.025, 
+                                                duration: 0.025,
                                                 bounce: 0,
                                             }}
                                         >
@@ -202,10 +157,10 @@ export default function Navbar({
                                                         width: '100%'
                                                     }}
                                                 >
-                                                    {eachFile.fileType.toLowerCase() === 'js' ? <FaJsSquare  
+                                                    {eachFile.fileType.toLowerCase() === 'js' ? <FaJsSquare
                                                         color="rgb(255, 255, 0)"
                                                         size={14}
-                                                    /> : <ImFilePdf 
+                                                    /> : <ImFilePdf
                                                         color="#c1121f"
                                                         size={14}
                                                     />}
@@ -219,31 +174,25 @@ export default function Navbar({
                                                 </div>
                                             </ReusableNavBtn>
                                         </motion.div>
-                                ))}
+                                    ))}
                                 </AnimatePresence>
                             </div>
-                    </motion.div>
-                ))
+                        </motion.div>
+                    ))}
+                </div>
             )
         }
     }
 
-
     return (
-        <div className="navbar">
-            <div className="tabs-container">
-                {getTabs()}
-            </div>
-            {
-                currTab &&
-                <AnimatePresence mode="popLayout" initial={false}>
-                    <div 
-                        className="tab-content"
-                    >
-                        {getTabContent()}
-                    </div>
-                </AnimatePresence>
-            }
-        </div>
+        <section
+            className={`tab-content ${className}`}
+            style={{
+                height: '100%'
+            }}
+        >
+            {getContent()}
+        </section>
     )
+
 }

@@ -180,6 +180,27 @@ html {
     width: 100%;
     background: black;
     overflow: auto;
+    position: relative;
+}
+
+.mobile-navBar {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    height: 100%;
+}
+
+.nav-bar-tab-content-title-container {
+    margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-bar-tab-content-title {
+    color: white;
+    font-size: 1rem;
+    font-variant: small-caps;
+    font-family: var(--font-description);
 }
 
 .navbar-icons {
