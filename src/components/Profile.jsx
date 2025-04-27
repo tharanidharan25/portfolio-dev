@@ -29,6 +29,7 @@ const contactIconsMap = (icon, styles) => {
 export default function Profile() {
 
     const profile = useSelector(store => store.profile);
+    const isMobile = useSelector(store => store.app.isMobile);
 
     const getContent = (data) => {
         switch (data.id) {
@@ -130,7 +131,7 @@ export default function Profile() {
                                         style={{
                                             position: 'absolute',
                                             right: 0,
-                                            top: 0,
+                                            top: 0
                                         }}
                                     >
                                         <ReusableIconBtn

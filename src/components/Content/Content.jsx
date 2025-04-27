@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { debounce, throttle } from "lodash";
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -11,6 +11,7 @@ import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
 import ContentNav from "./ContentNav";
 import Resume from "../Resume/Resume";
 import NavBarTabContent from "../NavBar/NavBarTabContent";
+import { updateCurrentTab } from "../../redux/slices/navSlice";
 
 export class Node {
     constructor(element) {
@@ -24,16 +25,48 @@ export default function Content({
     reachedTop,
     reachedEnd,
     setReachedTop,
-    setReachedEnd
+    setReachedEnd,
+    navBarRef
 }) {
 
     const dispatch = useDispatch();
 
-    const fileTree = useSelector(state => state.nav.fileTree);
-    const openedTabs = useSelector(state => state.content.openedTabs);
-    const openedTabsHash = useSelector(state => state.content.openedTabsHash);
-    const currentContent = useSelector(state => state.content.currentContent);
-    const contentContainer = document.querySelector("#content");
+    const fileTree = useSelector(state => state.nav.fileTree)
+    const openedTabs = useSelector(state => state.content.openedTabs)
+    const openedTabsHash = useSelector(state => state.content.openedTabsHash)
+    const currentContent = useSelector(state => state.content.currentContent)
+    const isMobile = useSelector(state => state.app.isMobile)
+    const currTab = useSelector(state => state.nav.currentTab)
+    const contentContainer = document.querySelector("#content")
+    const navBarTabContentRef = useRef(null)
+    const pageContentRef = useRef(null)
+    const navBar = navBarRef.current
+
+    const clickOutside = (event) => {
+        const navBarTabContent = navBarTabContentRef.current;
+        if (
+            isMobile &&
+            navBarTabContent &&
+            !navBarTabContent.contains(event.target) &&
+            event.target !== navBarTabContent &&
+            event.target !== navBar
+        ) {
+            dispatch(updateCurrentTab(null))
+        }
+    }
+
+    useEffect(() => {
+        const pageContent = pageContentRef.current;
+        if (isMobile && pageContent) {
+            pageContent.addEventListener('pointerdown', clickOutside)
+        }
+
+        return () => {
+            if (pageContent) {
+                pageContent.removeEventListener('pointerdown', clickOutside)
+            }
+        }
+    }, [isMobile, clickOutside])
 
     const changePage = useCallback(debounce((e) => {
         if (e.ctrlKey || e.shiftKey) return;
@@ -134,6 +167,7 @@ export default function Content({
     return (
         <div
             id="pageContent"
+            ref={pageContentRef}
             className="content"
             style={{
                 display: 'flex',
@@ -147,15 +181,16 @@ export default function Content({
                     handleCloseOpenedTab={handleCloseOpenedTab}
                 />
             </div>
-            <dialog
+            {(isMobile && currTab) && <div
                 id="navBarTabContent"
                 className="mobile-navBar"
+                ref={navBarTabContentRef}
             >
                 <NavBarTabContent
                     setReachedTop={setReachedTop}
                     setReachedEnd={setReachedEnd}
                 />
-            </dialog>
+            </div>}
             <AnimatePresence>
                 <motion.div
                     className="tabs"

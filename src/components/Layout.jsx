@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import TitleBar from "./TitleBar"
 import Navbar from "./NavBar/Navbar"
@@ -8,6 +8,7 @@ import { updateIsMobile } from "../redux/slices/appSlice"
 export default function Layout() {
     const { theme } = useSelector((store) => store.theme);
     const dispatch = useDispatch()
+    const navBarRef = useRef(null)
 
     function isMobile() {
         const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
@@ -29,12 +30,14 @@ export default function Layout() {
                     <Navbar
                         setReachedTop={setReachedTop}
                         setReachedEnd={setReachedEnd}
+                        navBarRef={navBarRef}
                     />
                     <Content
                         reachedTop={reachedTop}
                         reachedEnd={reachedEnd}
                         setReachedTop={setReachedTop}
                         setReachedEnd={setReachedEnd}
+                        navBarRef={navBarRef}
                     />
                 </div>
             </>

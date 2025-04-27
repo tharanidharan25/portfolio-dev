@@ -28,44 +28,19 @@ const tabs = [
 
 export default function Navbar({
     setReachedTop,
-    setReachedEnd
+    setReachedEnd,
+    navBarRef
 }) {
 
     const dispatch = useDispatch();
     const currTab = useSelector(state => state.nav.currentTab);
     const isMobile = useSelector(state => state.app.isMobile);
-    const navBarTabContent = document.getElementById("navBarTabContent");
-    const pageContent = document.getElementById("pageContent");
-    const navBar = document.getElementById("navBar");
-
-    const clickOutside = (event) => {
-        if (
-            navBarTabContent &&
-            navBarTabContent.open &&
-            !navBarTabContent.contains(event.target) &&
-            event.target !== navBarTabContent &&
-            event.target !== navBar
-        ) {
-            dispatch(updateCurrentTab(null))
-            navBarTabContent.close()
-        }
-    }
-
-    if (isMobile) {
-        pageContent.addEventListener('pointerdown', clickOutside)
-    }
 
     const handleTabClick = (newValue) => {
         if (newValue === currTab) {
-            if (isMobile && navBarTabContent) {
-                navBarTabContent.close()
-            }
             dispatch(updateCurrentTab(null))
-            return
-        }
-        dispatch(updateCurrentTab(newValue))
-        if (isMobile) {
-            navBarTabContent.show()
+        } else {
+            dispatch(updateCurrentTab(newValue))
         }
     }
 
@@ -114,7 +89,7 @@ export default function Navbar({
 
 
     return (
-        <div id="navBar" className="navbar">
+        <div ref={navBarRef} className="navbar">
             <div className="tabs-container">
                 {getTabs()}
             </div>
