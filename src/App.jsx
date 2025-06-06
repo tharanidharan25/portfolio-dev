@@ -1,8 +1,10 @@
-import Layout from './components/Layout';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toaster } from 'sonner';
+
+import Layout from './components/Layout';
 import { updateWindowWidth } from './redux/slices/appSlice';
 import { updateCurrentTab } from './redux/slices/navSlice';
-import { useEffect } from 'react';
 
 function App() {
 
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <>
+      <Toaster closeButton />
       <Layout />
     </>
   )

@@ -1,15 +1,15 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 import { motion } from 'motion/react'
+import { toast } from "sonner"
 
-import { BiLogoGmail } from "react-icons/bi";
-import { IoCopyOutline } from "react-icons/io5";
-import { AiOutlineLinkedin } from "react-icons/ai";
-import { FaGithub } from "react-icons/fa";
-import { TbBrandLeetcode } from "react-icons/tb";
+import { BiLogoGmail } from "react-icons/bi"
+import { IoCopyOutline } from "react-icons/io5"
+import { AiOutlineLinkedin } from "react-icons/ai"
+import { FaGithub } from "react-icons/fa"
+import { TbBrandLeetcode } from "react-icons/tb"
 
-import ReusableIconBtn from "../utils/ReusableIconBtn";
-import ContentContainer from "./Content/shared/ContentContainer";
+import ReusableIconBtn from "../utils/ReusableIconBtn"
+import ContentContainer from "./Content/shared/ContentContainer"
 
 const contactIconsMap = (icon, styles) => {
     switch (icon) {
@@ -107,7 +107,7 @@ export default function Profile() {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
                                     }}
                                     onClick={() => {
                                         window.open(eachContact.link, `${eachContact.id !== 'mail' ? '_blank' : '_self'}`)
@@ -127,7 +127,7 @@ export default function Profile() {
                                         })}
                                     </div>
                                     <div
-                                        className="copy-btn"
+                                        className={isMobile ? 'mobile-copy-btn-container' : "copy-btn-container"}
                                         style={{
                                             position: 'absolute',
                                             right: 0,
@@ -136,15 +136,16 @@ export default function Profile() {
                                     >
                                         <ReusableIconBtn
                                             sx={{
-                                                padding: '0.5rem'
+                                                padding: isMobile ? '0.25rem' : '0.5rem'
                                             }}
-                                            className='copy-btn'
+                                            className={isMobile ? 'mobile-copy-btn' : "copy-btn"}
                                             onClick={async (e) => {
                                                 e.stopPropagation();
                                                 await navigator.clipboard.writeText(eachContact.copyLink)
+                                                toast.success(`${eachContact.toastName} copied to Clipboard!`)
                                             }}
                                         >
-                                            <IoCopyOutline size={'1.25rem'} color='#fff' />
+                                            <IoCopyOutline size={isMobile ? '0.8rem' : '1.25rem'} color='#fff' />
                                         </ReusableIconBtn>
                                     </div>
                                 </ContentContainer>
@@ -157,6 +158,8 @@ export default function Profile() {
                 return null
         }
     }
+
+    console.log(isMobile);
 
     return (
         <div

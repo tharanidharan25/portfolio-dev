@@ -23,6 +23,7 @@ const initialState = {
             copyLink: 'tharanidharan.ponselvam@gmail.com',
             hoverBgColor: 'rgb(0, 0, 0, 30)',
             borderColor: 'rgb(199, 22, 16)',
+            toastName: 'Mail ID'
         }, {
             id: 'linkedIn',
             icon: 'linkedInIcon',
@@ -32,6 +33,7 @@ const initialState = {
             copyLink: 'https://www.linkedin.com/in/tharanidharan-ponselvam/',
             hoverBgColor: 'rgb(0, 0, 0, 30)',
             borderColor: '#0077B5',
+            toastName: 'LinkedIn profile link'
         }, {
             id: 'gitHub',
             icon: 'gitHubIcon',
@@ -41,6 +43,7 @@ const initialState = {
             copyLink: 'https://github.com/tharanidharan25',
             hoverBgColor: 'rgb(0, 0, 0, 30)',
             borderColor: '#fff',
+            toastName: 'GitHub profile link'
         }, {
             id: 'leetcode',
             icon: 'leetcodeIcon',
@@ -50,6 +53,7 @@ const initialState = {
             copyLink: 'https://leetcode.com/u/Tharanidharan/',
             hoverBgColor: 'rgb(0, 0, 0, 30)',
             borderColor: '#fea116',
+            toastName: 'Leetcode profile link'
         }],
         style: {
             gridColumn: '1 / -1'

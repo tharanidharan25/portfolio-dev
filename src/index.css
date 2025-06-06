@@ -292,6 +292,14 @@ html {
     color: #e2e8f0;
 }
 
+.mobile-copy-btn-container {
+    opacity: 0.75;
+    border-left: 2px double #fff;
+    border-bottom: 2px solid #fff;
+    border-right: 2px double #fff;
+    border-radius: 60%;
+}
+
 .copy-btn {
     opacity: 0;
     transition: all 0.25s ease-in-out;
