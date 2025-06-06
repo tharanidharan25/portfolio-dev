@@ -2,4 +2,4 @@
 
 ### Tech Stack: React.Js, Redux Toolkit
 
-#### Packages used: Framer Motion
+#### Packages used: Framer Motion, Sonner
