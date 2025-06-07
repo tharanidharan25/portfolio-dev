@@ -1,11 +1,10 @@
-import { useMemo, useRef, useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import { pdfjs, Document, Page } from "react-pdf"
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"
 import "react-pdf/dist/esm/Page/TextLayer.css"
 
 import resumePDF from '../../assets/tharanidharan.pdf'
 import { MdOutlineFileDownload, MdOutlineZoomIn, MdOutlineZoomOut } from "react-icons/md"
-import { CiZoomIn, CiZoomOut } from "react-icons/ci"
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min?url"
 
 import DownloadBtn from "./DownloadBtn"

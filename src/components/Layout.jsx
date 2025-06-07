@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import TitleBar from "./TitleBar"
 import Navbar from "./NavBar/Navbar"
 import Content from "./Content/Content"
 import { updateIsMobile } from "../redux/slices/appSlice"
 
 export default function Layout() {
-    const { theme } = useSelector((store) => store.theme);
     const dispatch = useDispatch()
     const navBarRef = useRef(null)
 

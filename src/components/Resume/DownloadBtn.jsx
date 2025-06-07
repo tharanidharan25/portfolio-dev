@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 export default function DownloadBtn({
     filePath = '',
     fileName = 'file',
@@ -12,4 +15,10 @@ export default function DownloadBtn({
             {children}
         </a>
     )
+}
+
+DownloadBtn.propTypes = {
+    filePath: PropTypes.string,
+    fileName: PropTypes.string,
+    children: PropTypes.node
 }

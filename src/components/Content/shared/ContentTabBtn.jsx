@@ -1,19 +1,22 @@
-import { VscChromeClose } from "react-icons/vsc";
-import { FaJsSquare } from "react-icons/fa";
-import { ImFilePdf } from "react-icons/im";
+import React from "react"
 
-import { motion } from 'motion/react';
+import { VscChromeClose } from "react-icons/vsc"
+import { FaJsSquare } from "react-icons/fa"
+import { ImFilePdf } from "react-icons/im"
+
+import { motion } from 'motion/react'
 
 export default function ContentTabBtn({
     label = "",
-    onClick = () => {},
-    onClose = () => {},
+    onClick = () => { },
+    onClose = () => { },
     currentTab = false,
     fileType = 'js',
     ...props
 }) {
+
     return (
-        <div 
+        <div
             key={'label'}
             style={{
                 position: 'relative',
@@ -21,7 +24,7 @@ export default function ContentTabBtn({
         >
             {currentTab && (<motion.span
                 layoutId="contentTab"
-                transition={{ type:'spring', duration: 0.5, bounce: 0 }}
+                transition={{ type: 'spring', duration: 0.5, bounce: 0 }}
                 style={{
                     background: '#000',
                     zIndex: 0,
@@ -40,15 +43,15 @@ export default function ContentTabBtn({
                 }}
             >
                 <div>
-                    {fileType.toLowerCase() === 'js' ? <FaJsSquare 
+                    {fileType.toLowerCase() === 'js' ? <FaJsSquare
                         color="rgb(255, 255, 0)"
                         size={14}
-                    /> : <ImFilePdf 
+                    /> : <ImFilePdf
                         color="#c1121f"
                         size={14}
                     />}
                 </div>
-                <button 
+                <button
                     className="content-tab-btn"
                     onClick={onClick}
                     {...props}
@@ -79,7 +82,7 @@ export default function ContentTabBtn({
                     }}
                     className="content-nav-close"
                 >
-                    <VscChromeClose 
+                    <VscChromeClose
                         size={14}
                         color="#fff"
                     />

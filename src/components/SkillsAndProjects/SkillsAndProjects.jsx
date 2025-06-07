@@ -1,17 +1,9 @@
+import React from "react"
 import { useSelector } from "react-redux"
-import { useEffect } from "react"
-import {
-    motion,
-    useMotionValue,
-    useTransform,
-    animate,
-    useAnimate
-} from 'motion/react'
 
-import Cursor from "./shared/Cursor"
-import Project from "./shared/Project"
 import Skill from "./shared/Skill"
 import ContentContainer from "../Content/shared/ContentContainer"
+import PropTypes from "prop-types"
 
 export default function SkillsAndProjects() {
 
@@ -67,7 +59,7 @@ export default function SkillsAndProjects() {
                     }}
                 >
                     {projectData.techStack.map((eachTech, idx) => (
-                        <p className="each-tech" >
+                        <p key={idx} className="each-tech" >
                             {`${eachTech}${idx < (projectData.techStack.length - 1) ? ',' : ''}`}
                         </p>
                     ))}
@@ -89,6 +81,10 @@ export default function SkillsAndProjects() {
         </>
     )
 
+    Project.propTypes = {
+        projectData: PropTypes.object
+    }
+
     const getSkills = () => (
         <div key={'skills-container'} className="skills-container">
             {skillsData.map(eachSkill => (
@@ -104,6 +100,7 @@ export default function SkillsAndProjects() {
                                 className="each-skill"
                                 skill={eachContent.label}
                                 id={eachContent.id}
+                                key={idx}
                             />
                         ))}
                     </div>

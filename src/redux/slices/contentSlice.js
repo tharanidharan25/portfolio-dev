@@ -81,7 +81,7 @@ const contentSlice = createSlice({
             if (!state.openedTabs.setCurrentTab(payload)) {
                 state.openedTabs.insertNode(payload);
             }
-            if (!(state.openedTabsHash.hasOwnProperty(payload.data.id))) {
+            if (!(Object.prototype.hasOwnProperty.call(state.openedTabsHash, payload.data.id))) {
                 const newOpenedHashTabs = {
                     ...state.openedTabsHash,
                 }

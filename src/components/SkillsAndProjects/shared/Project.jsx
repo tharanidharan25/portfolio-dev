@@ -1,9 +1,9 @@
+import React, { useRef } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
-import { useRef } from "react"
+import PropTypes from "prop-types"
 
 export default function Project({
     id,
-    Project = '',
     className = '',
     children
 }) {
@@ -70,7 +70,7 @@ export default function Project({
                         display: 'block',
                     }}
                 >
-                    {skill.split('').map((letter, letterIdx) => (
+                    {/* {skill.split('').map((letter, letterIdx) => (
                         <motion.span
                             key={letterIdx}
                             className="project-heading-each-letter"
@@ -87,7 +87,7 @@ export default function Project({
                         >
                             {letter}
                         </motion.span>
-                    ))}
+                    ))} */}
                     <span className="project-underline" />
                 </motion.span>
             </div>
@@ -110,4 +110,10 @@ export default function Project({
             </motion.div>
         </motion.div>
     )
+}
+
+Project.propTypes = {
+    id: PropTypes.string,
+    className: PropTypes.string,
+    children: PropTypes.node
 }

@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 export default function ReusableIconBtn({
     children,
     sx,
@@ -18,4 +21,10 @@ export default function ReusableIconBtn({
             {children}
         </button>
     )
+}
+
+ReusableIconBtn.propTypes = {
+    children: PropTypes.node,
+    sx: PropTypes.object,
+    onClick: PropTypes.func
 }

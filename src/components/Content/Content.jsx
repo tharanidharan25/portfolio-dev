@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { debounce, throttle } from "lodash";
+import { useCallback, useEffect, useRef } from "react";
+import { debounce } from "lodash";
 import { AnimatePresence, motion } from 'motion/react';
 
 import Profile from "../Profile";

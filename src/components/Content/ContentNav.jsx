@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from "react-redux"
+import React from "react";
+import { useSelector } from "react-redux"
+import { AnimatePresence, motion } from 'motion/react'
+import PropTypes from "prop-types";
 
 import ContentTabBtn from "./shared/ContentTabBtn";
 
-import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
-import { AnimatePresence, motion } from 'motion/react';
 
-export default function ContentNav({ 
+export default function ContentNav({
     handleOpenedTabClick,
     handleCloseOpenedTab
 }) {
@@ -13,8 +14,8 @@ export default function ContentNav({
     const openedTabs = useSelector(state => state.content.openedTabs);
 
     const getopenedTabs = () => (
-        tabs.map((eachTab, idx) => (
-            <ContentTabBtn 
+        tabs.map((eachTab) => (
+            <ContentTabBtn
                 key={eachTab.data.id}
                 onClick={() => handleOpenedTabClick(eachTab)}
                 onClose={() => handleCloseOpenedTab(eachTab)}
@@ -40,4 +41,9 @@ export default function ContentNav({
             </motion.div>
         </AnimatePresence>
     )
+}
+
+ContentNav.propTypes = {
+    handleOpenedTabClick:  PropTypes.func,
+    handleCloseOpenedTab: PropTypes.func
 }

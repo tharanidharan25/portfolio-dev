@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -10,6 +10,7 @@ import {
 
 import { updateCurrentTab } from "../../redux/slices/navSlice";
 import NavBarTabContent from "./NavBarTabContent";
+import PropTypes from "prop-types";
 
 const tabs = [
     {
@@ -102,4 +103,10 @@ export default function Navbar({
             </AnimatePresence>
         </div>
     )
+}
+
+Navbar.propTypes = {
+    setReachedTop: PropTypes.bool,
+    setReachedEnd: PropTypes.bool,
+    navBarRef: PropTypes.node,
 }

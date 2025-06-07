@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 export default function ReusableMenuBtn({
     onClick,
     children,
@@ -14,4 +17,9 @@ export default function ReusableMenuBtn({
             </button>
         </div>
     )
+}
+
+ReusableMenuBtn.propTypes = {
+    onClick: PropTypes.func,
+    children: PropTypes.node
 }

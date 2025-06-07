@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 export default function ReusableNavBtn({
     children,
     className,
@@ -20,4 +23,9 @@ export default function ReusableNavBtn({
             {children}
         </button>
     )
+}
+
+ReusableNavBtn.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string
 }

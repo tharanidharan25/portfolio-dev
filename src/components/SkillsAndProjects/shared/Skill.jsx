@@ -1,3 +1,6 @@
+import PropTypes from "prop-types"
+import React from "react"
+
 export default function Skill({
     skill = ''
 }) {
@@ -9,4 +12,8 @@ export default function Skill({
             />
         </div>
     )
+}
+
+Skill.propTypes = {
+    skill: PropTypes.string
 }

@@ -1,4 +1,6 @@
+import React from 'react'
 import { motion } from 'motion/react'
+import PropTypes from 'prop-types'
 
 export default function ContentContainer({
     key,
@@ -72,4 +74,14 @@ export default function ContentContainer({
             />
         </motion.div>
     )
+}
+
+ContentContainer.propTypes = {
+    key: PropTypes.string,
+    className: PropTypes.string,
+    styles: PropTypes.object,
+    borderColor: PropTypes.string,
+    borderWidth: PropTypes.number,
+    children: PropTypes.node,
+    onClick: PropTypes.func,
 }

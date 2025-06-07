@@ -1,3 +1,4 @@
+import React from "react"
 import { useSelector } from "react-redux"
 import { motion } from 'motion/react'
 import { toast } from "sonner"
@@ -158,8 +159,6 @@ export default function Profile() {
                 return null
         }
     }
-
-    console.log(isMobile);
 
     return (
         <div

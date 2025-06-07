@@ -1,4 +1,6 @@
+import React from 'react'
 import { motion } from 'motion/react'
+import PropTypes from 'prop-types'
 
 const cursorVariants = {
     blinking: {
@@ -30,4 +32,9 @@ export default function Cursor({
             }}
         />
     )
+}
+
+Cursor.propTypes = {
+    height: PropTypes.number,
+    color: PropTypes.string
 }

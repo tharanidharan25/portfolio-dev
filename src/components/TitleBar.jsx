@@ -32,7 +32,7 @@ export default function TitleBar() {
                 .then(() => {
                     dispatch(updateFullScreened(false))
                 })
-                .catch((err) => {
+                .catch(() => {
                     dispatch(updateFullScreened(true))
                 })
             } else {
@@ -40,7 +40,7 @@ export default function TitleBar() {
                 .then(() => {
                     dispatch(updateFullScreened(true))
                 })
-                .catch((err) => {
+                .catch(() => {
                     dispatch(updateFullScreened(false))
                 })
         }

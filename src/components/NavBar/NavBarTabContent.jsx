@@ -1,5 +1,7 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from 'motion/react';
+import PropTypes from "prop-types";
 
 import ReusableIconBtn from "../../utils/ReusableIconBtn";
 import ReusableNavBtn from "../../utils/ReusableNavBtn";
@@ -141,7 +143,7 @@ export default function NavBarTabContent({
                                         >
                                             <ReusableNavBtn
                                                 className={idx}
-                                                onClick={(e) => {
+                                                onClick={() => {
                                                     setReachedTop(true)
                                                     setReachedEnd(false)
                                                     contentContainer.scrollTo(0, 0)
@@ -194,5 +196,10 @@ export default function NavBarTabContent({
             {getContent()}
         </section>
     )
+}
 
+NavBarTabContent.propTypes = {
+    setReachedTop: PropTypes.bool,
+    setReachedEnd: PropTypes.bool,
+    className: PropTypes.string,
 }
