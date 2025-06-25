@@ -1,17 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
-import { AnimatePresence, motion } from 'motion/react';
 
 import Profile from "../Profile";
-import Education from "../Education";
 import SkillsAndProjects from "../SkillsAndProjects/SkillsAndProjects";
 
-import { addOpenedTabs, closeOpenedTab } from "../../redux/slices/contentSlice";
+import { addOpenedTabs, closeOpenedTab, setReachedEnd, setReachedTop } from "../../redux/slices/contentSlice";
 import ContentNav from "./ContentNav";
 import Resume from "../Resume/Resume";
 import NavBarTabContent from "../NavBar/NavBarTabContent";
 import { updateCurrentTab } from "../../redux/slices/navSlice";
+import PropTypes from "prop-types";
 
 export class Node {
     constructor(element) {
@@ -21,11 +20,106 @@ export class Node {
     }
 }
 
+const ScrollableContent = ({ content }) => {
+    const dispatch = useDispatch()
+
+    const fileTree = useSelector(state => state.nav.fileTree)
+    const openedTabs = useSelector(state => state.content.openedTabs)
+    const openedTabsHash = useSelector(state => state.content.openedTabsHash)
+    const reachedTop = useSelector(state => state.content.reachedTop)
+    const reachedEnd = useSelector(state => state.content.reachedEnd)
+    const currentContent = useSelector(state => state.content.currentContent)
+
+    const contentRef = useRef(null)
+
+
+    useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.scrollTo(0, 0)
+            dispatch(setReachedTop(true))
+            dispatch(setReachedEnd(false))
+        }
+    }, [currentContent, dispatch])
+
+    const scrollPage = useCallback(debounce((e) => {
+        const target = e.target;
+
+        const isAtTop = target.scrollTop < 1;
+        const isAtBottom = Math.abs(target.scrollHeight - (target.scrollTop + target.clientHeight)) < 2;
+
+        // User has reached the top for the first time
+        if (isAtTop) {
+            if (!reachedTop) {
+                dispatch(setReachedTop(true));
+                dispatch(setReachedEnd(false));
+            }
+        } else if (isAtBottom) {
+            if (!reachedEnd) {
+                // User has reached the bottom for the first time
+                dispatch(setReachedTop(false));
+                dispatch(setReachedEnd(true));
+            }
+        } else if (!isAtTop && !isAtBottom) {
+            if (reachedTop || reachedEnd){
+                dispatch(setReachedTop(false));
+                dispatch(setReachedEnd(false));
+            }
+        }
+    }, 200), [dispatch, reachedEnd, reachedTop])
+
+    const changePage = debounce((e) => {
+        if (e.ctrlKey || e.shiftKey) return;
+        if (e.nativeEvent.wheelDeltaY <= -90 && reachedEnd) {
+            // User has reached bottom of the current file
+            // Scrolling down
+            if (openedTabs?.currentContent?.next) {
+                dispatch(addOpenedTabs(openedTabs.currentContent.next));
+            } else {
+                const nextFile = fileTree[0].files.find(eachFile => !(eachFile.id in openedTabsHash))
+                if (nextFile) {
+                    dispatch(addOpenedTabs(new Node(nextFile)));
+                }
+            }
+        } else if (e.nativeEvent.wheelDeltaY >= 90 && reachedTop) {
+            // User has reached top of the current file
+            // Scrolling up
+            if (openedTabs?.currentContent?.prev) {
+                dispatch(addOpenedTabs(openedTabs.currentContent.prev));
+            }
+        }
+    }, 200)
+
+    useEffect(() => {
+        return () => {
+            scrollPage.cancel()
+            changePage.cancel()
+        }
+    }, [scrollPage, changePage])
+
+    return (
+        <div
+            className="tabs"
+            id="content"
+            style={{
+                color: '#fff',
+                padding: '1rem',
+                overflow: 'auto',
+                paddingBottom: 0
+            }}
+            onScroll={scrollPage}
+            onWheel={changePage}
+            ref={contentRef}
+        >
+            {content}
+        </div>
+    )
+}
+
+ScrollableContent.propTypes = {
+    content: PropTypes.element
+}
+
 export default function Content({
-    reachedTop,
-    reachedEnd,
-    setReachedTop,
-    setReachedEnd,
     navBarRef
 }) {
 
@@ -33,11 +127,9 @@ export default function Content({
 
     const fileTree = useSelector(state => state.nav.fileTree)
     const openedTabs = useSelector(state => state.content.openedTabs)
-    const openedTabsHash = useSelector(state => state.content.openedTabsHash)
     const currentContent = useSelector(state => state.content.currentContent)
     const isMobile = useSelector(state => state.app.isMobile)
     const currTab = useSelector(state => state.nav.currentTab)
-    const contentContainer = document.querySelector("#content")
     const navBarTabContentRef = useRef(null)
     const pageContentRef = useRef(null)
     const navBar = navBarRef.current
@@ -68,87 +160,11 @@ export default function Content({
         }
     }, [isMobile, clickOutside])
 
-    const changePage = useCallback(debounce((e) => {
-        if (e.ctrlKey || e.shiftKey) return;
-
-        // User already at the top
-        if (contentContainer.scrollTop < 1) {
-            if (e.nativeEvent.wheelDeltaY >= 90) {
-
-                // There's not enough content to cause scroll
-                // User reached top
-                if (!((contentContainer.scrollHeight - contentContainer.clientHeight) < 2) && !reachedTop) {
-                    setReachedTop(true)
-                    setReachedEnd(false)
-                    return
-                }
-                if (openedTabs?.currentContent?.prev) {
-                    dispatch(addOpenedTabs(openedTabs.currentContent.prev));
-                    contentContainer.scrollTo(0, 0)
-                    return
-                }
-            } else if ((contentContainer.scrollHeight - contentContainer.clientHeight) < 2) {
-
-                // User reached bottom as well since there's not enough content to cause scroll
-                if (e.nativeEvent.wheelDeltaY <= -90) {
-                    if (openedTabs?.currentContent?.next) {
-                        dispatch(addOpenedTabs(openedTabs.currentContent.next));
-                        contentContainer.scrollTo(0, 0)
-                        return
-                    }
-                    else {
-                        const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
-                        if (nextFile) {
-                            dispatch(addOpenedTabs(new Node(nextFile)));
-                            contentContainer.scrollTo(0, 0)
-                            return
-                        }
-                    }
-                }
-            }
-        }
-
-        // There's content to be able to scroll and user has reached bottom
-        if (Math.abs(contentContainer.scrollHeight - (contentContainer.scrollTop + contentContainer.clientHeight)) < 2) {
-            if (!reachedEnd) {
-                // User has reached bottom for the first time
-                setReachedTop(false);
-                setReachedEnd(true);
-                return
-            }
-            if (e.nativeEvent.wheelDeltaY <= -90) {
-                setReachedTop(true); // Moving to next file, so user has already reached top of the new file
-                setReachedEnd(false);
-                if (openedTabs?.currentContent?.next) {
-                    dispatch(addOpenedTabs(openedTabs.currentContent.next));
-                    contentContainer.scrollTo(0, 0)
-                    return
-                }
-                else {
-                    const nextFile = fileTree[0].files.find(eachFile => !(openedTabsHash.hasOwnProperty(eachFile.id)))
-                    if (nextFile) {
-                        dispatch(addOpenedTabs(new Node(nextFile)));
-                        contentContainer.scrollTo(0, 0)
-                    }
-                    return
-                }
-            }
-        }
-        setReachedEnd(false)
-        setReachedTop(false)
-    }, 200), [openedTabsHash, openedTabs, reachedEnd, reachedTop]);
-
     const handleOpenedTabClick = (tab) => {
-        setReachedTop(true)
-        setReachedEnd(false)
-        contentContainer.scrollTo(0, 0)
         dispatch(addOpenedTabs(tab))
     }
 
     const handleCloseOpenedTab = (tab) => {
-        setReachedEnd(false)
-        setReachedTop(true)
-        contentContainer.scrollTo(0, 0)
         dispatch(closeOpenedTab(tab))
     }
 
@@ -164,6 +180,12 @@ export default function Content({
         }
     }, [])
 
+    const content = <>
+        {currentContent == 'profile' && <Profile key={'profile'} />}
+        {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'} />}
+        {currentContent == 'resume' && <Resume key={'resume'} />}
+    </>
+
     return (
         <div
             id="pageContent"
@@ -173,7 +195,6 @@ export default function Content({
                 display: 'flex',
                 flexDirection: 'column',
             }}
-            onWheel={(e) => changePage(e)} // do for track pad scroll
         >
             <div className="content-header">
                 <ContentNav
@@ -181,33 +202,20 @@ export default function Content({
                     handleCloseOpenedTab={handleCloseOpenedTab}
                 />
             </div>
-            {(isMobile && currTab) && <div
-                id="navBarTabContent"
-                className="mobile-navBar"
-                ref={navBarTabContentRef}
-            >
-                <NavBarTabContent
-                    setReachedTop={setReachedTop}
-                    setReachedEnd={setReachedEnd}
-                />
-            </div>}
-            <AnimatePresence>
-                <motion.div
-                    className="tabs"
-                    id="content"
-                    style={{
-                        color: '#fff',
-                        padding: '1rem',
-                        overflow: 'auto',
-                        paddingBottom: 0
-                    }}
+            {
+                (isMobile && currTab) && <div
+                    id="navBarTabContent"
+                    className="mobile-navBar"
+                    ref={navBarTabContentRef}
                 >
-                    {currentContent == 'profile' && <Profile key={'profile'} />}
-                    {currentContent == 'education' && <Education key={'education'} />}
-                    {currentContent == 'skillsAndProjects' && <SkillsAndProjects key={'skillsAndProjects'} />}
-                    {currentContent == 'resume' && <Resume key={'interests'} />}
-                </motion.div>
-            </AnimatePresence>
+                    <NavBarTabContent />
+                </div>
+            }
+            <ScrollableContent content={content} />
         </div>
     )
+}
+
+Content.propTypes = {
+    navBarRef: PropTypes.element
 }

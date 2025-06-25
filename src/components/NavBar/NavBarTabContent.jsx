@@ -8,7 +8,7 @@ import ReusableNavBtn from "../../utils/ReusableNavBtn";
 
 import { Node } from "../Content/Content";
 import { updateCurrentTab, updateFileTree } from "../../redux/slices/navSlice";
-import { addOpenedTabs } from "../../redux/slices/contentSlice";
+import { addOpenedTabs, setReachedEnd, setReachedTop } from "../../redux/slices/contentSlice";
 
 import {
     VscChevronRight,
@@ -19,8 +19,6 @@ import { FaJsSquare } from "react-icons/fa";
 import { ImFilePdf } from "react-icons/im";
 
 export default function NavBarTabContent({
-    setReachedTop,
-    setReachedEnd,
     className = ''
 }) {
 
@@ -144,8 +142,8 @@ export default function NavBarTabContent({
                                             <ReusableNavBtn
                                                 className={idx}
                                                 onClick={() => {
-                                                    setReachedTop(true)
-                                                    setReachedEnd(false)
+                                                    dispatch(setReachedTop(true))
+                                                    dispatch(setReachedEnd(false))
                                                     contentContainer.scrollTo(0, 0)
                                                     const newNode = new Node(eachFile)
                                                     dispatch(addOpenedTabs(newNode))
@@ -199,7 +197,5 @@ export default function NavBarTabContent({
 }
 
 NavBarTabContent.propTypes = {
-    setReachedTop: PropTypes.bool,
-    setReachedEnd: PropTypes.bool,
     className: PropTypes.string,
 }

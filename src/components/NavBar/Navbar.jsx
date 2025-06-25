@@ -28,8 +28,6 @@ const tabs = [
 ];
 
 export default function Navbar({
-    setReachedTop,
-    setReachedEnd,
     navBarRef
 }) {
 
@@ -96,8 +94,6 @@ export default function Navbar({
             </div>
             <AnimatePresence mode="popLayout" initial={false}>
                 {(!isMobile && currTab) && <NavBarTabContent
-                    setReachedTop={setReachedTop}
-                    setReachedEnd={setReachedEnd}
                     isVisible={currTab && !isMobile}
                 />}
             </AnimatePresence>
@@ -106,7 +102,5 @@ export default function Navbar({
 }
 
 Navbar.propTypes = {
-    setReachedTop: PropTypes.bool,
-    setReachedEnd: PropTypes.bool,
     navBarRef: PropTypes.node,
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { useDispatch } from "react-redux"
 import TitleBar from "./TitleBar"
 import Navbar from "./NavBar/Navbar"
@@ -18,8 +18,6 @@ export default function Layout() {
         dispatch(updateIsMobile(isMobile()))
     }, [])
 
-    const [reachedTop, setReachedTop] = useState(true);
-    const [reachedEnd, setReachedEnd] = useState(false);
 
     return (
         <div className="page-container">
@@ -27,15 +25,9 @@ export default function Layout() {
                 <TitleBar />
                 <div className="page-content">
                     <Navbar
-                        setReachedTop={setReachedTop}
-                        setReachedEnd={setReachedEnd}
                         navBarRef={navBarRef}
                     />
                     <Content
-                        reachedTop={reachedTop}
-                        reachedEnd={reachedEnd}
-                        setReachedTop={setReachedTop}
-                        setReachedEnd={setReachedEnd}
                         navBarRef={navBarRef}
                     />
                 </div>

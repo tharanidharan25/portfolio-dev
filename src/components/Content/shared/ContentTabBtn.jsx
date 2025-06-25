@@ -5,6 +5,7 @@ import { FaJsSquare } from "react-icons/fa"
 import { ImFilePdf } from "react-icons/im"
 
 import { motion } from 'motion/react'
+import PropTypes from "prop-types"
 
 export default function ContentTabBtn({
     label = "",
@@ -41,6 +42,7 @@ export default function ContentTabBtn({
                     borderRight: '2px solid black',
                     position: 'relative',
                 }}
+                onClick={onClick}
             >
                 <div>
                     {fileType.toLowerCase() === 'js' ? <FaJsSquare
@@ -53,7 +55,6 @@ export default function ContentTabBtn({
                 </div>
                 <button
                     className="content-tab-btn"
-                    onClick={onClick}
                     {...props}
                     style={{
                         background: 'transparent',
@@ -90,4 +91,12 @@ export default function ContentTabBtn({
             </span>
         </div>
     )
+}
+
+ContentTabBtn.propTypes = {
+    label: PropTypes.string,
+    onClick: PropTypes.func,
+    onClose: PropTypes.func,
+    currentTab: PropTypes.bool,
+    fileType: PropTypes.string,
 }
