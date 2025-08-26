@@ -54,7 +54,7 @@ export default function Resume() {
                         />
                     </button>
                     <DownloadBtn
-                        filePath="/assets/Tharanidharan.pdf"
+                        filePath={resumePDF}
                         fileName={"Tharanidharan.pdf"}
                     >
                         <MdOutlineFileDownload
